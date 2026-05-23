@@ -42,13 +42,7 @@ Cloudflare R2 (임시 저장소 + Presigned URL)
 - ✅ TikTok/Instagram 영상 다운로드
 - ✅ URL 검증 및 보안
 - ✅ Rate limiting (IP 기준 1분 3회)
-- ✅ Concurrent job 제한 (최대 3개)
-- ✅ 파일 크기 제한 (1GB 이상 차단)
-- ✅ Cloudflare R2 업로드
-- ✅ Presigned URL 방식 다운로드
-- ✅ 자동 임시 파일 정리
-- ✅ 에러 로깅 및 모니터링
-- ✅ 광고 영역 (PropellerAds, Adsterra 지원)
+- ✅ Zero-Disk Streaming (서버 저장 없이 즉시 전송)
 - ✅ SEO 최적화 (JSON-LD FAQ schema 포함)
 
 ## 빠른 시작
@@ -57,10 +51,9 @@ Cloudflare R2 (임시 저장소 + Presigned URL)
 
 ```bash
 cd /Users/systemi/TaeoDownloader
-npm install --prefix server
-cp server/.env.example server/.env
-# .env 파일 수정 (S3 credentials 입력)
-npm start --prefix server
+cd /var/www/app/server
+npm install
+npm start
 # 브라우저: http://localhost:3000
 ```
 

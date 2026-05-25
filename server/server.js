@@ -83,6 +83,7 @@ function executeYtDlp(args, timeout = DOWNLOAD_TIMEOUT) {
     const ytdlpArgs = [...args];
     
     ytdlpArgs.push('--cookies', '/home/opc/cookies.txt');
+    ytdlpArgs.push('--extractor-args', 'youtube:player_client=android');
 
     if (process.env.YTDLP_PROXY) {
       ytdlpArgs.push('--proxy', process.env.YTDLP_PROXY);
@@ -236,8 +237,6 @@ app.post('/api/download', async (req, res) => {
     // fragmented mp4 플래그를 사용하여 스트리밍(pipe) 시에도 재생 가능한 MP4를 생성합니다.
     const ytdlpArgs = [
       url,
-      '--cookies', '/home/opc/cookies.txt',
-      '--extractor-args', 'youtube:player_client=android',
       '-f', 'best',
       '-o', '-',
       '--no-part'
@@ -246,6 +245,8 @@ app.post('/api/download', async (req, res) => {
     if (process.env.YTDLP_PROXY) {
       ytdlpArgs.push('--proxy', process.env.YTDLP_PROXY);
     }
+
+    console.log("[YT-DLP CMD]", ytdlpArgs.join(" "));
 
     const downloadProc = spawn('yt-dlp', ytdlpArgs);
     downloadProc.stdout.pipe(res);

@@ -81,6 +81,9 @@ function executeYtDlp(args, timeout = DOWNLOAD_TIMEOUT) {
     let stdout = '';
     let stderr = '';
     const ytdlpArgs = [...args];
+    
+    ytdlpArgs.push('--cookies', '/home/opc/cookies.txt');
+
     if (process.env.YTDLP_PROXY) {
       ytdlpArgs.push('--proxy', process.env.YTDLP_PROXY);
     }

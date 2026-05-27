@@ -53,30 +53,34 @@ function isWhitelistedDomain(hostname) {
 function getCommonYtDlpArgs() {
   const args = [
     '--no-warnings',
-    '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    '--user-agent', 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
     '--referer', 'https://www.youtube.com/',
     '--geo-bypass',
-    '--impersonate', 'chrome'
+    '--force-ipv4', // IPv6 차단 회피
+    // 유튜브 차단 우회를 위한 가장 강력한 조합 (안드로이드 클라이언트 우선)
+    '--extractor-args', 'youtube:player_client=android,mweb'
   ];
 
   const envPath = process.env.YTDLP_COOKIES;
   const defaultPath = '/home/opc/cookies.txt';
   let finalPath = null;
 
-  // 1. .env에 설정된 경로가 있고 파일이 존재하는지 확인
   if (envPath && fs.existsSync(envPath)) {
     finalPath = envPath;
-  } 
-  // 2. 아니면 기본 서버 경로에 파일이 있는지 확인
-  else if (fs.existsSync(defaultPath)) {
+  } else if (fs.existsSync(defaultPath)) {
     finalPath = defaultPath;
   }
 
   if (finalPath) {
-    args.push('--cookies', finalPath);
-    // console.log(`[INFO] Using cookies from: ${finalPath}`);
+    const content = fs.readFileSync(finalPath, 'utf8');
+    if (content.includes('youtube.com')) {
+      args.push('--cookies', finalPath);
+      console.log(`[OK] Cookies loaded for YouTube: ${finalPath}`);
+    } else {
+      console.warn(`[WARN] Cookies found but no YouTube session data: ${finalPath}`);
+      args.push('--cookies', finalPath);
+    }
   } else {
-    if (envPath) console.warn(`[WARN] Cookies file not found at preferred path: ${envPath}`);
     console.warn(`[WARN] No cookies.txt found. YouTube/TikTok might fail.`);
   }
 

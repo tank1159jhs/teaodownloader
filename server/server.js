@@ -165,7 +165,8 @@ app.post('/api/download', async (req, res) => {
 
     const ytdlpArgs = [
       url,
-      '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+      // 포맷 제한을 완화하여 차단 우회 시에도 영상을 찾을 수 있게 함
+      '-f', 'bestvideo+bestaudio/best',
       '--merge-output-format', 'mp4',
       '-o', '-',
       '--no-part',

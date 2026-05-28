@@ -26,14 +26,15 @@ app.use(express.json());
 const PLATFORM_CONFIGS = {
   youtube: {
     domains: ['youtube.com', 'youtu.be'],
-    // 아이폰 호환성을 위해 h264(avc1) 코덱 우선 순위 부여
-    format: 'bestvideo[vcodec^=avc1]+bestaudio[ext=m4a]/best[vcodec^=avc1]/best',
-    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1',
+    // [사용자 불패 공식 복구] 에러 방지를 위해 기존 설정을 100% 유지
+    format: 'bv+ba/b',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     referer: 'https://www.youtube.com/',
     extraArgs: [
-      '--extractor-args', 'youtube:player_client=ios,mweb',
+      '--extractor-args', 'youtube:player_client=android,web',
       '--force-ipv4',
       '--no-playlist',
+      '--no-call-home',
       '--no-check-certificates'
     ]
   },
@@ -43,7 +44,7 @@ const PLATFORM_CONFIGS = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     referer: 'https://www.google.com/',
     impersonate: 'chrome',
-    extraArgs: ['--no-playlist']
+    extraArgs: ['--no-playlist', '--no-call-home']
   },
   instagram: {
     domains: ['instagram.com'],
@@ -51,7 +52,7 @@ const PLATFORM_CONFIGS = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     referer: 'https://www.google.com/',
     impersonate: 'chrome',
-    extraArgs: ['--no-playlist']
+    extraArgs: ['--no-playlist', '--no-call-home']
   },
   twitter: {
     domains: ['x.com', 'twitter.com'],
@@ -59,26 +60,13 @@ const PLATFORM_CONFIGS = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     referer: 'https://x.com/',
     impersonate: 'chrome',
-    extraArgs: ['--no-playlist']
+    extraArgs: ['--no-playlist', '--no-call-home']
   }
 };
 
 // =================================
-// 유틸리티
+// 공통 인자 생성기
 // =================================
-function getPlatformConfig(urlString) {
-  try {
-    const url = new URL(urlString);
-    const hostname = url.hostname.toLowerCase();
-    for (const key in PLATFORM_CONFIGS) {
-      if (PLATFORM_CONFIGS[key].domains.some(d => hostname === d || hostname.endsWith('.' + d))) {
-        return PLATFORM_CONFIGS[key];
-      }
-    }
-  } catch (e) {}
-  return null;
-}
-
 function buildYtDlpArgs(url, config, isMetadata = false) {
   const args = [
     '--no-warnings',
@@ -95,14 +83,14 @@ function buildYtDlpArgs(url, config, isMetadata = false) {
   if (process.env.YTDLP_PROXY) args.push('--proxy', process.env.YTDLP_PROXY);
 
   if (isMetadata) {
-    // 메타데이터 추출 속도 향상을 위한 최소 정보만 요청
-    args.push('--dump-json', '--flat-playlist');
+    // [속도 최적화] 제목만 빠르게 추출
+    args.push('--print', '%(title)s');
   } else {
     args.push('-f', config.format);
     args.push('-o', '-');
     args.push('--no-part', '--quiet');
     args.push('--merge-output-format', 'mp4');
-    // 아이폰 재생 가능하도록 movflags 설정
+    // 아이폰 재생 호환성을 위한 FFmpeg 필터 적용
     args.push('--postprocessor-args', 'ffmpeg:-movflags frag_keyframe+empty_moov');
   }
   return args;
@@ -120,7 +108,7 @@ app.get(['/sw.js', '/verification.txt', '/verification.html'], (req, res) => {
 app.use(express.static(FRONTEND_PATH));
 
 app.get(['/en', '/ko', '/ja'], (req, res) => {
-  res.sendFile(path.join(FRONTEND_PATH, 'index.html'));
+  res.sendFile('index.html', { root: FRONTEND_PATH });
 });
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
@@ -132,46 +120,57 @@ app.post('/api/download', async (req, res) => {
   const config = getPlatformConfig(url);
   if (!config) return res.status(400).json({ error: 'UNSUPPORTED_DOMAIN' });
 
-  console.log(`[DL-REQ] ${url}`);
   let downloadProc = null;
 
   try {
-    // 1. 정보 추출 (타임아웃 설정 및 속도 최적화)
+    // 1. 정보 추출 (Turbo 모드)
     const metadataArgs = buildYtDlpArgs(url, config, true);
     const metadataProc = spawn('yt-dlp', [...metadataArgs, url]);
-    let stdout = '';
+    let title = '';
     
     await new Promise((resolve, reject) => {
-      metadataProc.stdout.on('data', (d) => stdout += d.toString());
+      metadataProc.stdout.on('data', (d) => title += d.toString());
       metadataProc.on('close', (code) => code === 0 ? resolve() : reject(new Error('META_FAIL')));
-      setTimeout(() => { metadataProc.kill(); reject(new Error('TIMEOUT')); }, 15000);
+      setTimeout(() => { metadataProc.kill(); reject(new Error('TIMEOUT')); }, 20000);
     });
 
-    const metadata = JSON.parse(stdout);
-    const title = (metadata.title || crypto.randomBytes(4).toString('hex')).replace(/[\\/:*?"<>|]/g, "").substring(0, 80);
+    const cleanTitle = (title.trim() || crypto.randomBytes(4).toString('hex')).replace(/[\\/:*?"<>|]/g, "").substring(0, 80);
 
-    // 2. 응답 헤더 설정 (아이폰/사파리 파일명 호환 표준 적용)
+    // 2. 응답 헤더 (아이폰 Safari 표준 파일명)
     res.setHeader('Content-Type', 'video/mp4');
-    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(title)}.mp4`);
+    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(cleanTitle)}.mp4`);
 
-    // 3. 실제 다운로드 (Stream)
+    // 3. 실제 다운로드
     const downloadArgs = buildYtDlpArgs(url, config, false);
+    console.log(`[DL-START] ${cleanTitle}`);
+    
     downloadProc = spawn('yt-dlp', [...downloadArgs, url]);
     downloadProc.stdout.pipe(res);
 
     downloadProc.on('close', (code) => {
-      console.log(`[DL-FINISHED] ${title} (${code})`);
+      console.log(`[DL-END] ${cleanTitle} (${code})`);
       res.end();
     });
 
   } catch (err) {
-    console.error(`[DL-ERROR] ${err.message}`);
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'FAILED', message: '영상을 처리할 수 없습니다.' });
-    }
+    console.error(`[DL-ERR] ${err.message}`);
+    if (!res.headersSent) res.status(500).json({ error: 'FAILED' });
   }
 
   req.on('close', () => downloadProc && downloadProc.kill('SIGTERM'));
 });
 
-app.listen(PORT, () => console.log(`🚀 TAEO Mobile-Optimized Server on port ${PORT}`));
+function getPlatformConfig(urlString) {
+  try {
+    const url = new URL(urlString);
+    const hostname = url.hostname.toLowerCase();
+    for (const key in PLATFORM_CONFIGS) {
+      if (PLATFORM_CONFIGS[key].domains.some(d => hostname === d || hostname.endsWith('.' + d))) {
+        return PLATFORM_CONFIGS[key];
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+app.listen(PORT, () => console.log(`🚀 TAEO Standard-Turbo Server on port ${PORT}`));

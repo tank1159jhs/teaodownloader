@@ -26,16 +26,16 @@ app.use(express.json());
 const PLATFORM_CONFIGS = {
   youtube: {
     domains: ['youtube.com', 'youtu.be'],
-    // [사용자 불패 공식] 최상의 화질 및 호환성 유지
+    // [사용자 불패 공식 복구] 에러 방지를 위해 기존 설정을 100% 유지
     format: 'bv+ba/b',
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     referer: 'https://www.youtube.com/',
     extraArgs: [
-      '--extractor-args', 'youtube:player_client=mweb',
+      '--extractor-args', 'youtube:player_client=android,web',
       '--force-ipv4',
       '--no-playlist',
-      '--no-check-certificates',
-      '--no-cache-dir'
+      '--no-call-home',
+      '--no-check-certificates'
     ]
   },
   tiktok: {

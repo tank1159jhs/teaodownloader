@@ -31,7 +31,7 @@ const PLATFORM_CONFIGS = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     referer: 'https://www.youtube.com/',
     extraArgs: [
-      '--extractor-args', 'youtube:player_client=android',
+      '--extractor-args', 'youtube:player_client=mweb',
       '--force-ipv4',
       '--no-playlist',
       '--no-check-certificates',
@@ -139,9 +139,10 @@ app.post('/api/download', async (req, res) => {
 
     const cleanTitle = (title.trim() || crypto.randomBytes(4).toString('hex')).replace(/[\\/:*?"<>|]/g, "").substring(0, 80);
 
-    // 2. 응답 헤더 (아이폰 Safari 표준 파일명)
+    // 2. 응답 헤더 (호환성 최적화)
     res.setHeader('Content-Type', 'video/mp4');
-    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(cleanTitle)}.mp4`);
+    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(cleanTitle)}.mp4"; filename*=UTF-8''${encodeURIComponent(cleanTitle)}.mp4`);
+    res.setHeader('Transfer-Encoding', 'chunked');
 
     // 3. 실제 다운로드
     const downloadArgs = buildYtDlpArgs(url, config, false);

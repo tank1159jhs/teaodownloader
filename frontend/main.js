@@ -207,6 +207,31 @@ function downloadVideo() {
   }, 3000);
 }
 
+// [속도 최적화] 메타데이터 미리 분석 (Pre-fetch)
+let lastAnalyzedUrl = '';
+async function preFetchMetadata(url) {
+  if (!url || url === lastAnalyzedUrl) return;
+  if (!url.startsWith('http')) return;
+  
+  lastAnalyzedUrl = url;
+  try {
+    console.log('[PRE-FETCH] Starting analysis for:', url);
+    await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+  } catch (err) {
+    console.warn('[PRE-FETCH] Analysis failed:', err);
+  }
+}
+
+urlInput.addEventListener('input', (e) => preFetchMetadata(e.target.value.trim()));
+urlInput.addEventListener('paste', (e) => {
+  const pastedData = (e.clipboardData || window.clipboardData).getData('text');
+  preFetchMetadata(pastedData.trim());
+});
+
 downloadBtn.addEventListener('click', downloadVideo);
 urlInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') downloadVideo();

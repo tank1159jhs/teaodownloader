@@ -168,45 +168,78 @@ function showError(msg) {
 }
 
 function resetForm() {
-  urlInput.value = '';
-  loadingUI.classList.add('hidden');
-  errorUI.classList.add('hidden');
-  successUI.classList.add('hidden');
-}
-
-function downloadVideo() {
-  const url = urlInput.value.trim();
-  if (!url) {
-    const langPath = window.location.pathname.split('/')[1] || 'en';
-    const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
-    showError(t.input_placeholder);
-    return;
+  function showLoading() {
+    loadingUI.classList.remove('hidden');
+    errorUI.classList.add('hidden');
+    successUI.classList.add('hidden');
+    document.getElementById('progressContainer').classList.add('hidden');
+    downloadBtn.disabled = true;
   }
-  
-  showLoading();
 
-  // HTML Form 생성 및 전송
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = '/api/download';
-  
-  const input = document.createElement('input');
-  input.type = 'hidden';
-  input.name = 'url';
-  input.value = url;
-  
-  form.appendChild(input);
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
+  // [추가] 실시간 진행률 추적 로직
+  async function trackProgress(url) {
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
 
-  setTimeout(() => {
-    const langPath = window.location.pathname.split('/')[1] || 'en';
-    const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
-    showSuccess(t.started);
-  }, 3000);
-}
+    // URL을 해시화하여 progressId 생성 (백엔드와 일치)
+    const encoder = new TextEncoder();
+    const data = encoder.encode(url);
+    const hashBuffer = await crypto.subtle.digest('MD5', data);
+    const progressId = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 
+    progressContainer.classList.remove('hidden');
+
+    const eventSource = new EventSource(`/api/progress/${progressId}`);
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const progress = data.progress;
+      progressBar.style.width = `${progress}%`;
+      progressText.textContent = `${Math.round(progress)}%`;
+
+      if (progress >= 100) {
+        eventSource.close();
+        progressText.textContent = "Complete! Opening Save Dialog...";
+      }
+    };
+
+    eventSource.onerror = () => eventSource.close();
+  }
+
+  function downloadVideo() {
+    const url = urlInput.value.trim();
+    if (!url) {
+      const langPath = window.location.pathname.split('/')[1] || 'en';
+      const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
+      showError(t.input_placeholder);
+      return;
+    }
+
+    showLoading();
+    trackProgress(url); // 진행률 추적 시작
+
+    // HTML Form 생성 및 전송
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/api/download';
+
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'url';
+    input.value = url;
+
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+
+    setTimeout(() => {
+      const langPath = window.location.pathname.split('/')[1] || 'en';
+      const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
+      showSuccess(t.started);
+    }, 1000);
+  }
 // [속도 최적화] 메타데이터 미리 분석 (Pre-fetch)
 let lastAnalyzedUrl = '';
 async function preFetchMetadata(url) {

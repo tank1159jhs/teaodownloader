@@ -7,6 +7,9 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 
+// [성능 최적화] 노드 처리 능력 확장
+process.env.UV_THREADPOOL_SIZE = '64';
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,9 +19,9 @@ const app = express();
 app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const FRONTEND_PATH = path.join(__dirname, '../frontend');
-const TEMP_DIR = '/tmp/taeo_downloads';
 
-// 임시 디렉토리 생성
+// [성능 최적화] 하드디스크 대신 RAM 디스크(/dev/shm) 사용 - I/O 병목 제거
+const TEMP_DIR = '/dev/shm/taeo_downloads';
 if (!fs.existsSync(TEMP_DIR)) {
   fs.mkdirSync(TEMP_DIR, { recursive: true });
 }
@@ -31,10 +34,10 @@ app.use(express.json());
 // =================================
 const WHITELISTED_DOMAINS = ['tiktok.com', 'instagram.com', 'youtube.com', 'x.com', 'twitter.com', 'youtu.be'];
 const MAX_FILE_SIZE = 1 * 1024 * 1024 * 1024; // 1GB
-const CONCURRENT_JOBS = 3;
-const DOWNLOAD_TIMEOUT = 10 * 60 * 1000; // 가속 다운로드 대기 시간 (10분)
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1분
-const RATE_LIMIT_MAX = 3; // 1분에 최대 3회
+const CONCURRENT_JOBS = 5; // 무료 서버 부하 고려하여 5개로 최적화
+const DOWNLOAD_TIMEOUT = 10 * 60 * 1000;
+const RATE_LIMIT_WINDOW = 60 * 1000;
+const RATE_LIMIT_MAX = 5;
 
 // =================================
 // 전역 상태 및 캐시
@@ -142,7 +145,7 @@ function getPlatformConfig(urlString) {
   return null;
 }
 
-async function executeYtDlp(args, config = null, timeout = DOWNLOAD_TIMEOUT, forceNoProxy = false) {
+async function executeYtDlp(args, config = null, timeout = DOWNLOAD_TIMEOUT, useAccel = false, jobId = null) {
   return new Promise((resolve, reject) => {
     let stdout = '';
     let stderr = '';
@@ -157,14 +160,35 @@ async function executeYtDlp(args, config = null, timeout = DOWNLOAD_TIMEOUT, for
     const cookiesPath = process.env.YTDLP_COOKIES || '/home/opc/cookies.txt';
     if (fs.existsSync(cookiesPath)) ytdlpArgs.push('--cookies', cookiesPath);
     
-    if (process.env.YTDLP_PROXY && !forceNoProxy && (!config || config.useProxy !== false)) {
+    const hasProxy = process.env.YTDLP_PROXY && (!config || config.useProxy !== false);
+    if (hasProxy) {
       ytdlpArgs.push('--proxy', process.env.YTDLP_PROXY);
     }
 
+    if (useAccel) {
+      ytdlpArgs.push('--downloader', 'aria2c');
+      const ariaArgs = ['-x 16', '-s 16', '-j 16', '-k 1M', '--stream-piece-selector=random'];
+      if (hasProxy) {
+        ariaArgs.push(`--all-proxy=${process.env.YTDLP_PROXY}`);
+      }
+      ytdlpArgs.push('--downloader-args', `aria2c:${ariaArgs.join(' ')}`);
+    }
+
     const proc = spawn('yt-dlp', ytdlpArgs, { timeout });
-    proc.stdout.on('data', (data) => stdout += data.toString());
+    
+    proc.stdout.on('data', (data) => {
+      const output = data.toString();
+      stdout += output;
+      // yt-dlp/aria2c 출력에서 진행률(%) 추출 (예: [download] 10.5% ...)
+      if (jobId) {
+        const match = output.match(/(\d+\.?\d*)%/);
+        if (match) jobProgress.set(jobId, parseFloat(match[1]));
+      }
+    });
+
     proc.stderr.on('data', (data) => stderr += data.toString());
     proc.on('close', (code) => {
+      if (jobId) jobProgress.set(jobId, 100);
       if (code === 0) resolve({ stdout, stderr });
       else reject(new Error(stderr.substring(0, 200) || `Exit code ${code}`));
     });
@@ -233,7 +257,6 @@ app.post('/api/download', async (req, res) => {
   const tempFilePath = path.join(TEMP_DIR, `${randomId}.mp4`);
   
   try {
-    // 1. 메타데이터 확보
     let metadata;
     const cached = metadataCache.get(url);
     const pending = pendingAnalyzes.get(url);
@@ -249,38 +272,39 @@ app.post('/api/download', async (req, res) => {
       throw new Error('FILE_TOO_LARGE');
     }
 
-    // 2. 가속 다운로드 (임시 파일 저장)
-    console.log(`[ACCEL-START] ${metadata.title} -> ${tempFilePath}`);
+    // [성능 최적화] RAM 디스크에서 aria2c 가속 다운로드 시작
+    console.log(`[ULTRA-ACCEL] ${metadata.title} -> RAM Disk`);
     const downloadArgs = [
       url,
       '-f', config.format,
       '-o', tempFilePath,
       '--no-part',
       '--merge-output-format', 'mp4',
-      '--postprocessor-args', 'ffmpeg:-movflags frag_keyframe+empty_moov',
-      '--downloader', 'aria2c',
-      '--downloader-args', 'aria2c:-x 16 -s 16 -k 1M'
+      '--postprocessor-args', 'ffmpeg:-movflags frag_keyframe+empty_moov'
     ];
     
     await executeYtDlp(downloadArgs, config, DOWNLOAD_TIMEOUT, true);
 
-    // 3. 파일 전송
+    // [성능 최적화] 파일 전송 시 높은 우선순위 부여
     const cleanTitle = (metadata.title || randomId).replace(/[\\/:*?"<>|]/g, "").substring(0, 80);
     res.setHeader('Content-Type', 'video/mp4');
     res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(cleanTitle)}.mp4"; filename*=UTF-8''${encodeURIComponent(cleanTitle)}.mp4`);
+    res.setHeader('X-Accel-Buffering', 'no'); // 버퍼링 방지로 즉시 전송
     
-    const fileStream = fs.createReadStream(tempFilePath);
+    const fileStream = fs.createReadStream(tempFilePath, { highWaterMark: 128 * 1024 }); // 버퍼 크기 최적화
     fileStream.pipe(res);
 
     fileStream.on('end', () => {
-      console.log(`[ACCEL-DONE] ${cleanTitle}`);
-      fs.unlink(tempFilePath, () => {}); // 전송 완료 후 삭제
+      console.log(`[ULTRA-DONE] ${cleanTitle}`);
+      fs.unlink(tempFilePath, () => {});
+      jobProgress.delete(progressId);
       activeJobs--;
     });
 
     res.on('close', () => {
       fileStream.destroy();
-      if (fs.existsSync(tempFilePath)) fs.unlink(tempFilePath, () => {}); // 끊겨도 삭제
+      if (fs.existsSync(tempFilePath)) fs.unlink(tempFilePath, () => {});
+      jobProgress.delete(progressId);
     });
 
   } catch (err) {
@@ -291,7 +315,8 @@ app.post('/api/download', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`🚀 TAEO Turbo-Accel Server on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 TAEO Ultra-Fast Server on port ${PORT}`));
 
 process.on('uncaughtException', (err) => console.error('[UNCAUGHT]', err));
 process.on('unhandledRejection', (err) => console.error('[UNHANDLED REJECTION]', err));
+

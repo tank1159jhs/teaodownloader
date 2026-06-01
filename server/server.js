@@ -269,7 +269,7 @@ app.post('/api/analyze', async (req, res) => {
 
 app.post('/api/download', async (req, res) => {
   const clientIp = getClientIp(req);
-  const { url } = req.body;
+  const { url, progressId: clientProgressId } = req.body;
   if (!url) return res.status(400).json({ error: 'URL_REQUIRED' });
 
   if (!checkRateLimit(clientIp)) return res.status(429).json({ error: 'TOO_MANY_REQUESTS' });
@@ -281,7 +281,9 @@ app.post('/api/download', async (req, res) => {
   activeJobs++;
   const randomId = generateRandomId();
   const tempFilePath = path.join(TEMP_DIR, `${randomId}.mp4`);
-  const progressId = crypto.createHash('sha256').update(url).digest('hex').substring(0, 32);
+  
+  // 프론트엔드에서 전달받은 ID가 있으면 사용, 없으면 직접 생성
+  let progressId = clientProgressId || crypto.createHash('sha256').update(url).digest('hex').substring(0, 32);
   
   try {
     let metadata;

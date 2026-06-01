@@ -181,39 +181,71 @@ function resetForm() {
   if (progressContainer) progressContainer.classList.add('hidden');
 }
 
-async function trackProgress(url) {
-  const progressContainer = document.getElementById('progressContainer');
+// 부드러운 게이지 애니메이션 변수
+let currentVisualProgress = 0;
+let progressInterval = null;
+
+function updateProgressBar(targetPercent) {
   const progressBar = document.getElementById('progressBar');
   const progressText = document.getElementById('progressText');
+  if (!progressBar || !progressText) return;
+
+  if (progressInterval) clearInterval(progressInterval);
   
-  if (!progressContainer || !progressBar || !progressText) return;
+  progressInterval = setInterval(() => {
+    if (currentVisualProgress < targetPercent) {
+      // 0.1%씩 아주 잘게 쪼개서 이동 (물 흐르는 듯한 효과)
+      currentVisualProgress += 0.2;
+      if (currentVisualProgress > targetPercent) currentVisualProgress = targetPercent;
+      
+      progressBar.style.width = `${currentVisualProgress}%`;
+      progressText.textContent = `${Math.floor(currentVisualProgress)}%`;
+    } else {
+      clearInterval(progressInterval);
+    }
+  }, 10); // 10ms 단위로 초정밀 업데이트
+}
+
+async function trackProgress(url) {
+  const progressContainer = document.getElementById('progressContainer');
+  if (!progressContainer) return null;
 
   const langPath = window.location.pathname.split('/')[1] || 'en';
   const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
 
-  const msgUint8 = new TextEncoder().encode(url);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-  const progressId = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
+  let progressId;
+  try {
+    const msgUint8 = new TextEncoder().encode(url);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+    progressId = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
+  } catch (e) {
+    progressId = btoa(unescape(encodeURIComponent(url))).substring(0, 32).replace(/[^a-zA-Z0-9]/g, '');
+  }
 
   progressContainer.classList.remove('hidden');
-  progressBar.style.width = '0%';
-  progressText.textContent = '0%';
+  
+  // 1단계: 분석 단계 (30%까지 부드럽게 채움)
+  updateProgressBar(30);
   
   const eventSource = new EventSource(`/api/progress/${progressId}`);
   
   eventSource.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    const progress = data.progress;
-    progressBar.style.width = `${progress}%`;
-    progressText.textContent = `${Math.round(progress)}%`;
+    const realProgress = data.progress;
     
-    if (progress >= 100) {
+    // 2단계: 실제 다운로드 단계 (30% ~ 100% 구간 매핑)
+    const visualTarget = 30 + (realProgress * 0.7);
+    updateProgressBar(visualTarget);
+    
+    if (realProgress >= 100) {
       eventSource.close();
-      progressText.textContent = t.complete_dialog;
+      const progressText = document.getElementById('progressText');
+      if (progressText) progressText.textContent = t.complete_dialog;
     }
   };
 
   eventSource.onerror = () => eventSource.close();
+  return progressId;
 }
 
 async function downloadVideo() {
@@ -227,6 +259,7 @@ async function downloadVideo() {
   }
   
   showLoading();
+  currentVisualProgress = 0; // 게이지 초기화
 
   try {
     // 먼저 분석 시도하여 캐시 생성 및 에러 체크
@@ -242,20 +275,25 @@ async function downloadVideo() {
       return;
     }
 
-    // 분석 성공 시 진행률 추적 시작 및 다운로드 실행
-    trackProgress(url);
+    const progressId = await trackProgress(url);
     showSuccess(t.started);
 
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = '/api/download';
     
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'url';
-    input.value = url;
+    const urlInputHidden = document.createElement('input');
+    urlInputHidden.type = 'hidden';
+    urlInputHidden.name = 'url';
+    urlInputHidden.value = url;
+    form.appendChild(urlInputHidden);
+
+    const idInputHidden = document.createElement('input');
+    idInputHidden.type = 'hidden';
+    idInputHidden.name = 'progressId';
+    idInputHidden.value = progressId;
+    form.appendChild(idInputHidden);
     
-    form.appendChild(input);
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);

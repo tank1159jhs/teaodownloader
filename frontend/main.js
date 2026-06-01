@@ -16,9 +16,9 @@ const TRANSLATIONS = {
     error_title: "❌ Error",
     retry_btn: "Try Again",
     success_title: "✅ Request Sent",
-    download_again_btn: "Download Another",
+    download_another: "Download Another",
     started: "Processing started! Your download will begin shortly.",
-    waiting_save_dialog: "The save location window will appear shortly (within 20 seconds). Please do not close this page.",
+    save_log: "The save location window will appear shortly (within 20 seconds). Please do not close this page.",
     feature_fast_title: "Lightning Fast",
     feature_fast_desc: "Download videos in seconds",
     feature_hq_title: "High Quality",
@@ -53,9 +53,9 @@ const TRANSLATIONS = {
     error_title: "❌ 오류 발생",
     retry_btn: "다시 시도",
     success_title: "✅ 요청 완료",
-    download_again_btn: "추가 다운로드",
+    download_another: "추가 다운로드",
     started: "처리가 시작되었습니다! 곧 다운로드가 진행됩니다.",
-    waiting_save_dialog: "저장 위치 선택 창이 나타날 때까지 최대 20초 정도 소요될 수 있습니다. 창이 뜰 때까지 잠시만 기다려 주세요.",
+    save_log: "저장 위치 선택 창이 나타날 때까지 최대 20초 정도 소요될 수 있습니다. 창이 뜰 때까지 잠시만 기다려 주세요.",
     feature_fast_title: "초고속 다운로드",
     feature_fast_desc: "몇 초 만에 영상을 소장하세요",
     feature_hq_title: "고화질 유지",
@@ -86,13 +86,13 @@ const TRANSLATIONS = {
     hero_description: "TikTok、Instagram、YouTubeの動画を即座にダウンロード。ウォーターマークなし、完全無料。",
     input_placeholder: "ここにリンクを貼り付けてください...",
     download_btn: "ダウンロード",
-    loading_text: "サーバーを準備中... (最大1分ほどかかる場合があります)",
+    loading_text: "サーバーを準備중... (最大1分ほどかかる場合があります)",
     error_title: "❌ エラー",
     retry_btn: "再試行",
     success_title: "✅ リクエスト 완료",
-    download_again_btn: "続けてダウンロード",
+    download_another: "続けてダウンロード",
     started: "処理を開始しました！まもなくダウンロードが始まります。",
-    waiting_save_dialog: "保存場所の選択ウィンドウが表示されるまで、最大20秒ほどかかる場合があります。ウィンドウが表示されるまでそのままお待ちください。",
+    save_log: "保存場所の選択ウィンドウが表示されるまで、最大20秒ほどかかる場合があります. ウィンドウが表示されるまでそのままお待ちください。",
     feature_fast_title: "超高速",
     feature_fast_desc: "数秒で動画を保存",
     feature_hq_title: "高画質",
@@ -103,7 +103,7 @@ const TRANSLATIONS = {
     feature_sec_desc: "プライバシーを徹底保護",
     faq_title: "よくある質問",
     faq_q1: "どのサイトに対応していますか？",
-    faq_a1: "TikTok、Instagram、YouTubeに対応しています。URLを貼るだけでOKです。",
+    faq_a1: "TikTok、Instagram、YouTubeに対応しています。URL을 貼るだけでOKです。",
     faq_q2: "利用料金はかかりますか？",
     faq_a2: "いいえ、完全に無料です。どなたでも自由にご利用いただけます。",
     faq_q3: "保存された動画はどうなりますか？",
@@ -111,8 +111,8 @@ const TRANSLATIONS = {
     faq_q4: "容量制限はありますか？",
     faq_a4: "最大1GBまで対応しています。それ以上のサイズは失敗する可能性があります。",
     faq_q5: "データは収集されますか？",
-    faq_a5: "いいえ、個人情報や履歴などは一切収集・保存しません。",
-    faq_q6: "著作権について",
+    faq_a5: "いいえ、個人정보や履歴などは一切収集・保存しません。",
+    faq_q6: "著作권について",
     faq_a6: "許可された動画のみダウンロードしてください。悪用に関しては責任を負いかねます。",
     legal_notice_title: "著作権に関する注意:",
     legal_notice_desc: "著作権者の許可を得たコンテンツのみをダウンロードしてください。TAEOはツールであり、利用方法に関する責任は負いません。クリエイターの権利を尊重してください。"
@@ -151,6 +151,8 @@ function showLoading() {
   loadingUI.classList.remove('hidden');
   errorUI.classList.add('hidden');
   successUI.classList.add('hidden');
+  const progressContainer = document.getElementById('progressContainer');
+  if (progressContainer) progressContainer.classList.add('hidden');
   downloadBtn.disabled = true;
 }
 
@@ -168,78 +170,80 @@ function showError(msg) {
 }
 
 function resetForm() {
-  function showLoading() {
-    loadingUI.classList.remove('hidden');
-    errorUI.classList.add('hidden');
-    successUI.classList.add('hidden');
-    document.getElementById('progressContainer').classList.add('hidden');
-    downloadBtn.disabled = true;
-  }
+  urlInput.value = '';
+  loadingUI.classList.add('hidden');
+  errorUI.classList.add('hidden');
+  successUI.classList.add('hidden');
+  const progressContainer = document.getElementById('progressContainer');
+  if (progressContainer) progressContainer.classList.add('hidden');
+}
 
-  // [추가] 실시간 진행률 추적 로직
-  async function trackProgress(url) {
-    const progressContainer = document.getElementById('progressContainer');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
+// 실시간 진행률 추적 로직
+async function trackProgress(url) {
+  const progressContainer = document.getElementById('progressContainer');
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  
+  if (!progressContainer || !progressBar || !progressText) return;
 
-    // URL을 해시화하여 progressId 생성 (백엔드와 일치)
-    const encoder = new TextEncoder();
-    const data = encoder.encode(url);
-    const hashBuffer = await crypto.subtle.digest('MD5', data);
-    const progressId = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  // URL을 MD5 해시화하여 progressId 생성
+  const msgUint8 = new TextEncoder().encode(url);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // MD5 대신 SHA-256 사용 (브라우저 지원)
+  const progressId = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
 
-    progressContainer.classList.remove('hidden');
-
-    const eventSource = new EventSource(`/api/progress/${progressId}`);
-
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      const progress = data.progress;
-      progressBar.style.width = `${progress}%`;
-      progressText.textContent = `${Math.round(progress)}%`;
-
-      if (progress >= 100) {
-        eventSource.close();
-        progressText.textContent = "Complete! Opening Save Dialog...";
-      }
-    };
-
-    eventSource.onerror = () => eventSource.close();
-  }
-
-  function downloadVideo() {
-    const url = urlInput.value.trim();
-    if (!url) {
-      const langPath = window.location.pathname.split('/')[1] || 'en';
-      const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
-      showError(t.input_placeholder);
-      return;
+  progressContainer.classList.remove('hidden');
+  
+  const eventSource = new EventSource(`/api/progress/${progressId}`);
+  
+  eventSource.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    const progress = data.progress;
+    progressBar.style.width = `${progress}%`;
+    progressText.textContent = `${Math.round(progress)}%`;
+    
+    if (progress >= 100) {
+      eventSource.close();
+      progressText.textContent = "Complete! Opening Save Dialog...";
     }
+  };
 
-    showLoading();
-    trackProgress(url); // 진행률 추적 시작
+  eventSource.onerror = () => eventSource.close();
+}
 
-    // HTML Form 생성 및 전송
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = '/api/download';
-
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'url';
-    input.value = url;
-
-    form.appendChild(input);
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-
-    setTimeout(() => {
-      const langPath = window.location.pathname.split('/')[1] || 'en';
-      const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
-      showSuccess(t.started);
-    }, 1000);
+function downloadVideo() {
+  const url = urlInput.value.trim();
+  if (!url) {
+    const langPath = window.location.pathname.split('/')[1] || 'en';
+    const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
+    showError(t.input_placeholder);
+    return;
   }
+  
+  showLoading();
+  trackProgress(url);
+
+  // HTML Form 생성 및 전송
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '/api/download';
+  
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'url';
+  input.value = url;
+  
+  form.appendChild(input);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+
+  setTimeout(() => {
+    const langPath = window.location.pathname.split('/')[1] || 'en';
+    const t = TRANSLATIONS[langPath] || TRANSLATIONS['en'];
+    showSuccess(t.started);
+  }, 1000);
+}
+
 // [속도 최적화] 메타데이터 미리 분석 (Pre-fetch)
 let lastAnalyzedUrl = '';
 async function preFetchMetadata(url) {

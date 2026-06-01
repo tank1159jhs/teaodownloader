@@ -20,7 +20,7 @@ app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const FRONTEND_PATH = path.join(__dirname, '../frontend');
 
-// [성능 최적화] 하드디스크 대신 RAM 디스크(/dev/shm) 사용 - I/O 병목 제거
+// [성능 최적화] RAM 디스크 사용
 const TEMP_DIR = '/dev/shm/taeo_downloads';
 if (!fs.existsSync(TEMP_DIR)) {
   fs.mkdirSync(TEMP_DIR, { recursive: true });
@@ -34,7 +34,7 @@ app.use(express.json());
 // =================================
 const WHITELISTED_DOMAINS = ['tiktok.com', 'instagram.com', 'youtube.com', 'x.com', 'twitter.com', 'youtu.be'];
 const MAX_FILE_SIZE = 1 * 1024 * 1024 * 1024; // 1GB
-const CONCURRENT_JOBS = 5; // 무료 서버 부하 고려하여 5개로 최적화
+const CONCURRENT_JOBS = 5;
 const DOWNLOAD_TIMEOUT = 10 * 60 * 1000;
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const RATE_LIMIT_MAX = 5;
@@ -46,6 +46,7 @@ let activeJobs = 0;
 const ipRequestMap = new Map();
 const metadataCache = new Map();
 const pendingAnalyzes = new Map();
+const jobProgress = new Map(); // 진행률 추적을 위한 전역 변수
 
 function setCache(url, data) {
   metadataCache.set(url, { data, timestamp: Date.now() });
@@ -179,7 +180,6 @@ async function executeYtDlp(args, config = null, timeout = DOWNLOAD_TIMEOUT, use
     proc.stdout.on('data', (data) => {
       const output = data.toString();
       stdout += output;
-      // yt-dlp/aria2c 출력에서 진행률(%) 추출 (예: [download] 10.5% ...)
       if (jobId) {
         const match = output.match(/(\d+\.?\d*)%/);
         if (match) jobProgress.set(jobId, parseFloat(match[1]));
@@ -212,6 +212,21 @@ app.get(['/sw.js', '/verification.txt', '/verification.html'], (req, res) => {
 app.use(express.static(FRONTEND_PATH));
 app.get(['/en', '/ko', '/ja'], (req, res) => res.sendFile('index.html', { root: FRONTEND_PATH }));
 app.get('/api/health', (req, res) => res.json({ status: 'ok', activeJobs }));
+
+app.get('/api/progress/:id', (req, res) => {
+  const { id } = req.params;
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  const interval = setInterval(() => {
+    const progress = jobProgress.get(id) || 0;
+    res.write(`data: ${JSON.stringify({ progress })}\n\n`);
+    if (progress >= 100) clearInterval(interval);
+  }, 500);
+
+  req.on('close', () => clearInterval(interval));
+});
 
 app.post('/api/analyze', async (req, res) => {
   const { url } = req.body;
@@ -255,6 +270,7 @@ app.post('/api/download', async (req, res) => {
   activeJobs++;
   const randomId = generateRandomId();
   const tempFilePath = path.join(TEMP_DIR, `${randomId}.mp4`);
+  const progressId = crypto.createHash('sha256').update(url).digest('hex').substring(0, 32);
   
   try {
     let metadata;
@@ -272,7 +288,6 @@ app.post('/api/download', async (req, res) => {
       throw new Error('FILE_TOO_LARGE');
     }
 
-    // [성능 최적화] RAM 디스크에서 aria2c 가속 다운로드 시작
     console.log(`[ULTRA-ACCEL] ${metadata.title} -> RAM Disk`);
     const downloadArgs = [
       url,
@@ -283,15 +298,15 @@ app.post('/api/download', async (req, res) => {
       '--postprocessor-args', 'ffmpeg:-movflags frag_keyframe+empty_moov'
     ];
     
-    await executeYtDlp(downloadArgs, config, DOWNLOAD_TIMEOUT, true);
+    jobProgress.set(progressId, 0);
+    await executeYtDlp(downloadArgs, config, DOWNLOAD_TIMEOUT, true, progressId);
 
-    // [성능 최적화] 파일 전송 시 높은 우선순위 부여
     const cleanTitle = (metadata.title || randomId).replace(/[\\/:*?"<>|]/g, "").substring(0, 80);
     res.setHeader('Content-Type', 'video/mp4');
     res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(cleanTitle)}.mp4"; filename*=UTF-8''${encodeURIComponent(cleanTitle)}.mp4`);
-    res.setHeader('X-Accel-Buffering', 'no'); // 버퍼링 방지로 즉시 전송
+    res.setHeader('X-Accel-Buffering', 'no');
     
-    const fileStream = fs.createReadStream(tempFilePath, { highWaterMark: 128 * 1024 }); // 버퍼 크기 최적화
+    const fileStream = fs.createReadStream(tempFilePath, { highWaterMark: 128 * 1024 });
     fileStream.pipe(res);
 
     fileStream.on('end', () => {
@@ -310,6 +325,7 @@ app.post('/api/download', async (req, res) => {
   } catch (err) {
     console.error(`[DL-ERR] ${err.message}`);
     activeJobs--;
+    jobProgress.delete(progressId);
     if (fs.existsSync(tempFilePath)) fs.unlink(tempFilePath, () => {});
     if (!res.headersSent) res.status(500).json({ error: 'FAILED', message: mapYtDlpErrorMessage(err.message) });
   }
@@ -319,4 +335,3 @@ app.listen(PORT, () => console.log(`🚀 TAEO Ultra-Fast Server on port ${PORT}`
 
 process.on('uncaughtException', (err) => console.error('[UNCAUGHT]', err));
 process.on('unhandledRejection', (err) => console.error('[UNHANDLED REJECTION]', err));
-

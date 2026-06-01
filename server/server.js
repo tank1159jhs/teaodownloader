@@ -36,12 +36,12 @@ const RATE_LIMIT_MAX = 3; // 1분에 최대 3회
 let activeJobs = 0;
 const ipRequestMap = new Map(); // IP별 요청 추적
 const metadataCache = new Map(); // URL별 메타데이터 캐시 (Pre-fetch용)
-const pendingAnalyzes = new Map(); // 현재 진행 중인 분석 작업 (중복 방지)
+const pendingAnalyzes = new Map(); // 진행 중인 분석 작업 추적
 
 // 캐시 정리 (메모리 관리: 10분 후 삭제)
 function setCache(url, data) {
   metadataCache.set(url, { data, timestamp: Date.now() });
-  pendingAnalyzes.delete(url);
+  pendingAnalyzes.delete(url); // 분석 완료 시 대기 목록에서 제거
   setTimeout(() => {
     const cached = metadataCache.get(url);
     if (cached && Date.now() - cached.timestamp >= 10 * 60 * 1000) {
@@ -171,7 +171,7 @@ function executeYtDlp(args, config = null, timeout = DOWNLOAD_TIMEOUT) {
       ytdlpArgs.push('--cookies', cookiesPath);
     }
     
-    // 플랫폼 설정에 따라 프록시 사용 여부 결정 (유튜브는 제외 가능)
+    // 플랫폼 설정에 따라 프록시 사용 여부 결정
     if (process.env.YTDLP_PROXY && (!config || config.useProxy !== false)) {
       ytdlpArgs.push('--proxy', process.env.YTDLP_PROXY);
     }
@@ -381,8 +381,8 @@ app.post('/api/download', async (req, res) => {
       '--postprocessor-args', 'ffmpeg:-movflags frag_keyframe+empty_moov'
     ];
 
-    // [추가] aria2c 가속기 사용
-    ytdlpArgs.push('--downloader', 'aria2c', '--downloader-args', 'aria2c:-x 16 -s 16 -k 1M');
+    // aria2c는 stdout 파이프 출력을 지원하지 않으므로 다운로드 단계에서는 제거
+    // (aria2c 대신 yt-dlp 내부 다운로더를 사용하여 스트리밍 안정성 확보)
 
     // config 설정을 ytdlpArgs에 직접 추가
     if (config.userAgent) ytdlpArgs.push('--user-agent', config.userAgent);
@@ -414,7 +414,7 @@ app.post('/api/download', async (req, res) => {
 
     // 클라이언트가 연결을 끊으면 프로세스 종료
     req.on('close', () => {
-      if (downloadProc) downloadProc.kill();
+      if (downloadProc) downloadProc.kill('SIGTERM');
     });
 
   } catch (err) {

@@ -107,7 +107,11 @@ const PLATFORM_CONFIGS = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     referer: 'https://www.douyin.com/',
     useProxy: true,
-    extraArgs: ['--no-playlist']
+    extraArgs: [
+      '--no-playlist',
+      '--add-header', 'Cookie: ', // Some extraction issues fixed by empty cookie
+      '--extractor-args', 'douyin:no-watermark=true'
+    ]
   },
   instagram: {
     domains: ['instagram.com'],

@@ -1,5 +1,5 @@
 /**
- * TAEO Frontend Logic - Integrated i18n & Ultra-Fast Smooth Progress
+ * TEO Frontend Logic - Integrated i18n & Ultra-Fast Smooth Progress
  */
 
 const urlInput = document.getElementById('urlInput');
@@ -21,9 +21,9 @@ const PLATFORM_MAP = {
 const TRANSLATIONS = {
   ko: {
     home: {
-      meta_title: "TAEO - 최고의 틱톡, 도우인, 인스타그램, 유튜브, X 영상 다운로더",
+      meta_title: "TEO - 최고의 틱톡, 도우인, 인스타그램, 유튜브, X 영상 다운로더",
       meta_description: "워터마크 없는 틱톡, 도우인(Douyin), 인스타, 유튜브, X 영상을 즉시 다운로드하세요. 가장 빠르고 무료인 도구입니다.",
-      hero_title: "⚡ TAEO 영상 다운로더",
+      hero_title: "⚡ TEO 영상 다운로더",
       hero_subtitle: "틱톡, 도우인, 인스타, 유튜브, X 영상 초고속 다운로드",
       hero_description: "워터마크 없는 도우인 및 소셜 미디어 영상을 즉시 다운로드하는 가장 빠른 무료 도구입니다.",
       input_placeholder: "여기에 영상 링크(틱톡, 도우인, 인스타, 유튜브, X)를 붙여넣으세요...",
@@ -45,9 +45,13 @@ const TRANSLATIONS = {
       started: "처리가 시작되었습니다! 곧 다운로드가 진행됩니다.",
       save_log: "저장 위치 선택 창이 나타날 때까지 최대 20초 정도 소요될 수 있습니다. 창이 뜰 때까지 잠시만 기다려 주세요.",
       complete_dialog: "완료! 저장 창을 여는 중...",
+      howto_title1: "링크 복사",
+      howto_title2: "URL 붙여넣기",
+      howto_title3: "영상 저장",
       howto_title: "영상 다운로드 방법",
+      step_label: "단계",
       howto_step1: "틱톡, 인스타그램, 유튜브에서 영상 링크를 복사하세요.",
-      howto_step2: "TAEO 검색창에 복사한 링크를 붙여넣으세요.",
+      howto_step2: "TEO 검색창에 복사한 링크를 붙여넣으세요.",
       howto_step3: "'다운로드' 버튼을 눌러 고화질 영상을 저장하세요.",
       feature_fast_title: "초고속 다운로드",
       feature_fast_desc: "몇 초 만에 영상을 소장하세요",
@@ -61,10 +65,10 @@ const TRANSLATIONS = {
       faq_q1: "어떤 플랫폼을 지원하나요?",
       faq_a1: "틱톡, 도우인, 인스타그램, 유튜브, X(트위터)를 지원합니다. URL만 붙여넣으면 끝!",
       faq_q2: "정말 무료인가요?",
-      faq_a2: "네! TAEO는 누구나 무료로 이용할 수 있는 서비스입니다.",
+      faq_a2: "네! TEO는 누구나 무료로 이용할 수 있는 서비스입니다.",
       faq_q3: "영상이 어디에 저장되나요?",
       faq_a3: "서버에 영구 저장되지 않고 즉시 사용자에게 스트리밍됩니다. 안심하세요!",
-      legal_notice_desc: "반드시 저작권자의 허가를 받은 콘텐츠만 다운로드하세요. TAEO는 도구일 뿐이며 사용자의 이용 방식에 책임을 지지 않습니다."
+      legal_notice_desc: "반드시 저작권자의 허가를 받은 콘텐츠만 다운로드하세요. TEO는 도구일 뿐이며 사용자의 이용 방식에 책임을 지지 않습니다."
     },
     youtube: {
       hero_title: "📺 유튜브 영상 다운로더",
@@ -93,9 +97,9 @@ const TRANSLATIONS = {
   },
   en: {
     home: {
-      meta_title: "TAEO - Best TikTok, Douyin, Instagram, YouTube & X Video Downloader",
+      meta_title: "TEO - Best TikTok, Douyin, Instagram, YouTube & X Video Downloader",
       meta_description: "Download TikTok, Douyin, Instagram, YouTube, and X (Twitter) videos instantly without watermark. Fastest and free tool.",
-      hero_title: "⚡ TAEO Video Downloader",
+      hero_title: "⚡ TEO Video Downloader",
       hero_subtitle: "Download TikTok, Douyin, Instagram, YouTube & X Videos Fast",
       hero_description: "The fastest free tool to download social media videos including Douyin without watermark. High quality MP4 support.",
       input_placeholder: "Paste link (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -117,9 +121,13 @@ const TRANSLATIONS = {
       started: "Processing started! Your download will begin shortly.",
       save_log: "The save location window will appear shortly (within 20 seconds). Please do not close this page.",
       complete_dialog: "Complete! Opening Save Dialog...",
+      howto_title1: "Copy Link",
+      howto_title2: "Paste URL",
+      howto_title3: "Get Video",
       howto_title: "How to Download Videos?",
+      step_label: "Step",
       howto_step1: "Copy the video link from TikTok, Instagram, or YouTube.",
-      howto_step2: "Paste the link into the TAEO search box above.",
+      howto_step2: "Paste the link into the TEO search box above.",
       howto_step3: "Press the 'Download' button to save your video.",
       feature_fast_title: "Lightning Fast",
       feature_fast_desc: "Download videos in seconds",
@@ -132,11 +140,11 @@ const TRANSLATIONS = {
       faq_title: "Frequently Asked Questions",
       faq_q1: "Which sites are supported?",
       faq_a1: "We support TikTok, Douyin, Instagram, YouTube, and X (Twitter). Simply paste the link.",
-      faq_q2: "Is TAEO free to use?",
-      faq_a2: "Yes! TAEO is completely free. We support ourselves through ads.",
+      faq_q2: "Is TEO free to use?",
+      faq_a2: "Yes! TEO is completely free. We support ourselves through ads.",
       faq_q3: "Where are videos saved?",
       faq_a3: "Files are streamed directly and not stored permanently. Privacy first!",
-      legal_notice_desc: "Only download content that you have permission to download. TAEO is not responsible for misuse."
+      legal_notice_desc: "Only download content that you have permission to download. TEO is not responsible for misuse."
     },
     youtube: {
       hero_title: "📺 YouTube Video Downloader",
@@ -165,9 +173,9 @@ const TRANSLATIONS = {
   },
   ja: {
     home: {
-      meta_title: "TAEO - TikTok, Douyin, Instagram, YouTube, X 動画ダウンロード保存",
-      meta_description: "TikTok、Douyin(抖音)、Instagram、YouTube、Xの動画を即座にダウンロード。ウォーターマークなし、완전 무료의 최강 툴.",
-      hero_title: "⚡ TAEO 動画保存・ダウンロード",
+      meta_title: "TEO - TikTok, Douyin, Instagram, YouTube, X 動画ダウンロード保存",
+      meta_description: "TikTok、Douyin(抖音)、Instagram、YouTube、Xの動画を即座にダウンロード。ウォーターマークなし, 완전 무료의 최강 툴.",
+      hero_title: "⚡ TEO 動画保存・ダウンロード",
       hero_subtitle: "TikTok, Douyin, Insta, YouTube, X 動画を最속 保存",
       hero_description: "TikTok、Douyin、Instagram、YouTube、X의 영상를 워터마크 없이 저장하는 최강의 무료 도구입니다.",
       input_placeholder: "여기에 영상 링크(TikTok, Douyin, Insta, YouTube, X)를 붙여넣으세요...",
@@ -189,9 +197,13 @@ const TRANSLATIONS = {
       started: "처리가 시작되었습니다! 곧 다운로드가 진행됩니다.",
       save_log: "저장 위치 선택 창이 나타날 때까지 최대 20초 정도 소요될 수 있습니다. 창이 뜰 때까지 잠시만 기다려 주세요.",
       complete_dialog: "完了! 저장 창을 여는 중...",
+      howto_title1: "リンクをコピー",
+      howto_title2: "URLを貼り付け",
+      howto_title3: "動画を保存",
       howto_title: "動画の保存方法",
+      step_label: "ステップ",
       howto_step1: "TikTok、Douyin、Instagram、YouTubeから動画のリンクをコピーします。",
-      howto_step2: "TAEOの入力欄にコピーしたリンクを貼り付けます。",
+      howto_step2: "TEOの入力欄にコピーしたリンクを貼り付けます。",
       howto_step3: "「ダウンロード」ボタンを押して高画質動画を保存します。",
       feature_fast_title: "超高速",
       feature_fast_desc: "数秒で動画を保存",
@@ -208,7 +220,7 @@ const TRANSLATIONS = {
       faq_a2: "いいえ, 完全に無料입니다. 누구나 자유롭게 이용할 수 있습니다.",
       faq_q3: "動画はどこに保存されますか?",
       faq_a3: "サーバー에는 저장되지 않고, 직접 전송됩니다. 프라이버시는 보호됩니다.",
-      legal_notice_desc: "著作権者の許可を得たコンテンツのみをダウンロードしてください. TAEO는 툴이며, 이용 방법에 관한 책임을 지지 않습니다."
+      legal_notice_desc: "著作権者の許可を得たコンテンツのみをダウンロードしてください. TEO는 툴이며, 이용 방법에 관한 책임을 지지 않습니다."
     },
     youtube: {
       hero_title: "📺 YouTube 動画保存",
@@ -237,9 +249,9 @@ const TRANSLATIONS = {
   },
   id: {
     home: {
-      meta_title: "TAEO - Pengunduh Video TikTok, Douyin, Instagram, YouTube & X Terbaik",
+      meta_title: "TEO - Pengunduh Video TikTok, Douyin, Instagram, YouTube & X Terbaik",
       meta_description: "Unduh video TikTok, Douyin, Instagram, YouTube, dan X tanpa watermark secara instan. Pengunduh video gratis tercepat.",
-      hero_title: "⚡ TAEO Pengunduh Video",
+      hero_title: "⚡ TEO Pengunduh Video",
       hero_subtitle: "Unduh Video TikTok, Douyin, Instagram, YouTube & X Cepat",
       hero_description: "Alat gratis tercepat untuk mengunduh video media sosial termasuk Douyin tanpa watermark. Mendukung MP4 kualitas tinggi.",
       input_placeholder: "Tempel tautan (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -261,9 +273,13 @@ const TRANSLATIONS = {
       started: "Pemrosesan dimulai! Unduhan Anda akan segera dimulai.",
       save_log: "Jendela lokasi penyimpanan akan segera muncul (dalam 20 detik). Mohon jangan tutup halaman ini.",
       complete_dialog: "Selesai! Membuka Dialog Simpan...",
+      howto_title1: "Salin Tautan",
+      howto_title2: "Tempel URL",
+      howto_title3: "Dapatkan Video",
       howto_title: "Cara Mengunduh Video?",
+      step_label: "Langkah",
       howto_step1: "Salin tautan video dari TikTok, Instagram, atau YouTube.",
-      howto_step2: "Tempel tautan ke kotak pencarian TAEO di atas.",
+      howto_step2: "Tempel tautan ke kotak pencarian TEO di atas.",
       howto_step3: "Tekan tombol 'Unduh' untuk menyimpan video Anda.",
       feature_fast_title: "Kilat Cepat",
       feature_fast_desc: "Unduh video dalam hitungan detik",
@@ -276,11 +292,11 @@ const TRANSLATIONS = {
       faq_title: "Pertanyaan yang Sering Diajukan",
       faq_q1: "Situs mana saja yang didukung?",
       faq_a1: "Kami mendukung TikTok, Douyin, Instagram, YouTube, dan X (Twitter). Cukup tempel tautannya.",
-      faq_q2: "Apakah TAEO gratis digunakan?",
-      faq_a2: "Ya! TAEO sepenuhnya gratis. Kami mendukung diri kami melalui iklan.",
+      faq_q2: "Apakah TEO gratis digunakan?",
+      faq_a2: "Ya! TEO sepenuhnya gratis. Kami mendukung diri kami melalui iklan.",
       faq_q3: "Di mana video disimpan?",
       faq_a3: "File dialirkan langsung dan tidak disimpan secara permanen. Privasi diutamakan!",
-      legal_notice_desc: "Hanya unduh konten yang Anda miliki izinnya. TAEO tidak bertanggung jawab atas penyalahgunaan."
+      legal_notice_desc: "Hanya unduh konten yang Anda miliki izinnya. TEO tidak bertanggung jawab atas penyalahgunaan."
     },
     youtube: {
       hero_title: "📺 Pengunduh Video YouTube",
@@ -309,9 +325,9 @@ const TRANSLATIONS = {
   },
   pt: {
     home: {
-      meta_title: "TAEO - Melhor Downloader de Vídeo para TikTok, Douyin, Instagram, YouTube e X",
+      meta_title: "TEO - Melhor Downloader de Vídeo para TikTok, Douyin, Instagram, YouTube e X",
       meta_description: "Baixe vídeos do TikTok, Douyin, Instagram, YouTube e X (Twitter) sem marca d'água instantaneamente. O downloader gratuito mais rápido.",
-      hero_title: "⚡ TAEO Downloader de Vídeo",
+      hero_title: "⚡ TEO Downloader de Vídeo",
       hero_subtitle: "Baixe Vídeos do TikTok, Douyin, Instagram, YouTube & X Rápido",
       hero_description: "A ferramenta gratuita mais rápida para baixar vídeos de redes sociais incluindo Douyin sem marca d'água. Suporte a MP4 de alta qualidade.",
       input_placeholder: "Cole o link (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -333,9 +349,13 @@ const TRANSLATIONS = {
       started: "Processamento iniciado! Seu download começará em breve.",
       save_log: "A janela de local de salvamento aparecerá em breve (dentro de 20 segundos). Por favor, não feche esta página.",
       complete_dialog: "Concluído! Abrindo Diálogo de Salvamento...",
+      howto_title1: "Copiar Link",
+      howto_title2: "Colar URL",
+      howto_title3: "Baixar Vídeo",
       howto_title: "Como Baixar Vídeos?",
+      step_label: "Passo",
       howto_step1: "Copie o link do vídeo do TikTok, Instagram ou YouTube.",
-      howto_step2: "Cole o link na caixa de busca do TAEO acima.",
+      howto_step2: "Cole o link na caixa de busca do TEO acima.",
       howto_step3: "Pressione o botão 'Baixar' para salvar seu vídeo.",
       feature_fast_title: "Rápido como um Raio",
       feature_fast_desc: "Baixe vídeos em segundos",
@@ -346,13 +366,13 @@ const TRANSLATIONS = {
       feature_sec_title: "Seguro",
       feature_sec_desc: "Sua privacidade protegida",
       faq_title: "Perguntas Frequentes",
-      faq_q1: "Quais sites são suportados?",
+      faq_q1: "Quais sites are suportados?",
       faq_a1: "Suportamos TikTok, Douyin, Instagram, YouTube e X (Twitter). Basta colar o link.",
-      faq_q2: "O TAEO é gratuito para usar?",
-      faq_a2: "Sim! O TAEO é completamente gratuito. Sustentamo-nos através de anúncios.",
+      faq_q2: "O TEO é gratuito para usar?",
+      faq_a2: "Sim! O TEO é completamente gratuito. Sustentamo-nos através de anúncios.",
       faq_q3: "Onde os vídeos são salvos?",
       faq_a3: "Os arquivos são transmitidos diretamente e não são armazenados permanentemente. Privacidade em primeiro lugar!",
-      legal_notice_desc: "Baixe apenas conteúdo para o qual você tem permissão. O TAEO não é responsável pelo mau uso."
+      legal_notice_desc: "Baixe apenas conteúdo para o qual você tem permissão. O TEO não é responsável pelo mau uso."
     },
     youtube: {
       hero_title: "📺 Downloader de Vídeo do YouTube",
@@ -381,9 +401,9 @@ const TRANSLATIONS = {
   },
   es: {
     home: {
-      meta_title: "TAEO - El mejor descargador de videos de TikTok, Douyin, Instagram, YouTube y X",
+      meta_title: "TEO - El mejor descargador de videos de TikTok, Douyin, Instagram, YouTube y X",
       meta_description: "Descarga videos de TikTok, Douyin, Instagram, YouTube y X (Twitter) al instante sin marca de agua. La herramienta gratuita más rápida.",
-      hero_title: "⚡ TAEO Descargador de Video",
+      hero_title: "⚡ TEO Descargador de Video",
       hero_subtitle: "Descarga videos de TikTok, Douyin, Instagram, YouTube y X rápido",
       hero_description: "La herramienta gratuita más rápida para descargar videos de redes sociales incluyendo Douyin sin marca de agua. Soporta MP4 de alta calidad.",
       input_placeholder: "Pega el enlace (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -405,9 +425,13 @@ const TRANSLATIONS = {
       started: "¡Procesamiento iniciado! Tu descarga comenzará pronto.",
       save_log: "La ventana de ubicación de guardado aparecerá pronto (en menos de 20 segundos). Por favor, no cierres esta página.",
       complete_dialog: "¡Completado! Abriendo Diálogo de Guardado...",
+      howto_title1: "Copiar Enlace",
+      howto_title2: "Pegar URL",
+      howto_title3: "Obtener Vídeo",
       howto_title: "¿Cómo descargar videos?",
+      step_label: "Paso",
       howto_step1: "Copia el enlace del video de TikTok, Instagram o YouTube.",
-      howto_step2: "Pega el enlace en el cuadro de búsqueda de TAEO arriba.",
+      howto_step2: "Pega el enlace en el cuadro de búsqueda de TEO arriba.",
       howto_step3: "Presiona el botón 'Descargar' para guardar tu video.",
       feature_fast_title: "Rápido como un rayo",
       feature_fast_desc: "Descarga videos en segundos",
@@ -420,11 +444,11 @@ const TRANSLATIONS = {
       faq_title: "Preguntas Frecuentes",
       faq_q1: "¿Qué sitios son compatibles?",
       faq_a1: "Soportamos TikTok, Douyin, Instagram, YouTube y X (Twitter). Simplemente pega el enlace.",
-      faq_q2: "¿Es gratis usar TAEO?",
-      faq_a2: "¡Sí! TAEO es completamente gratis. Nos mantenemos a través de anuncios.",
+      faq_q2: "¿Es gratis usar TEO?",
+      faq_a2: "¡Sí! TEO es completamente gratis. Nos mantenemos a través de anuncios.",
       faq_q3: "¿Dónde se guardan los videos?",
       faq_a3: "Los archivos se transmiten directamente y no se almacenan permanentemente. ¡La privacidad es lo primero!",
-      legal_notice_desc: "Solo descarga contenido para el cual tengas permiso. TAEO no es responsable del mal uso."
+      legal_notice_desc: "Solo descarga contenido para el cual tengas permiso. TEO no es responsable del mal uso."
     },
     youtube: {
       hero_title: "📺 Descargador de videos de YouTube",
@@ -453,9 +477,9 @@ const TRANSLATIONS = {
   },
   vi: {
     home: {
-      meta_title: "TAEO - Trình tải video TikTok, Douyin, Instagram, YouTube & X tốt nhất",
+      meta_title: "TEO - Trình tải video TikTok, Douyin, Instagram, YouTube & X tốt nhất",
       meta_description: "Tải video TikTok, Douyin, Instagram, YouTube và X (Twitter) ngay lập tức không có logo. Công cụ miễn phí nhanh nhất.",
-      hero_title: "⚡ TAEO Trình tải video",
+      hero_title: "⚡ TEO Trình tải video",
       hero_subtitle: "Tải video TikTok, Douyin, Instagram, YouTube & X nhanh chóng",
       hero_description: "Công cụ miễn phí nhanh nhất để tải video mạng xã hội bao gồm Douyin không có logo. Hỗ trợ MP4 chất lượng cao.",
       input_placeholder: "Dán liên kết (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -477,9 +501,13 @@ const TRANSLATIONS = {
       started: "Đã bắt đầu xử lý! Quá trình tải xuống của bạn sẽ sớm bắt đầu.",
       save_log: "Cửa sổ vị trí lưu sẽ sớm xuất hiện (trong vòng 20 giây). Vui lòng không đóng trang này.",
       complete_dialog: "Hoàn tất! Đang mở hộp thoại lưu...",
+      howto_title1: "Sao chép liên kết",
+      howto_title2: "Dán URL",
+      howto_title3: "Tải video",
       howto_title: "Làm thế nào để tải video?",
+      step_label: "Bước",
       howto_step1: "Sao chép liên kết video từ TikTok, Instagram hoặc YouTube.",
-      howto_step2: "Dán liên kết vào ô tìm kiếm TAEO ở trên.",
+      howto_step2: "Dán liên kết vào ô tìm kiếm TEO ở trên.",
       howto_step3: "Nhấn nút 'Tải xuống' để lưu video của bạn.",
       feature_fast_title: "Nhanh như chớp",
       feature_fast_desc: "Tải video trong vài giây",
@@ -492,11 +520,11 @@ const TRANSLATIONS = {
       faq_title: "Các câu hỏi thường gặp",
       faq_q1: "Những trang nào được hỗ trợ?",
       faq_a1: "Chúng tôi hỗ trợ TikTok, Douyin, Instagram, YouTube và X (Twitter). Chỉ cần dán liên kết.",
-      faq_q2: "TAEO có miễn phí không?",
-      faq_a2: "Có! TAEO hoàn toàn miễn phí. Chúng tôi duy trì thông qua quảng cáo.",
+      faq_q2: "TEO có miễn phí không?",
+      faq_a2: "Có! TEO hoàn toàn miễn phí. Chúng tôi duy trì thông qua quảng cáo.",
       faq_q3: "Video được lưu ở đâu?",
       faq_a3: "Các tệp được truyền trực tiếp và không được lưu trữ vĩnh viễn. Quyền riêng tư là trên hết!",
-      legal_notice_desc: "Chỉ tải xuống nội dung mà bạn có quyền. TAEO không chịu trách nhiệm về việc lạm dụng."
+      legal_notice_desc: "Chỉ tải xuống nội dung mà bạn có quyền. TEO không chịu trách nhiệm về việc lạm dụng."
     },
     youtube: {
       hero_title: "📺 Trình tải video YouTube",
@@ -525,9 +553,9 @@ const TRANSLATIONS = {
   },
   ru: {
     home: {
-      meta_title: "TAEO - Лучший загрузчик видео из TikTok, Douyin, Instagram, YouTube и X",
+      meta_title: "TEO - Лучший загрузчик видео из TikTok, Douyin, Instagram, YouTube и X",
       meta_description: "Скачивайте видео из TikTok, Douyin, Instagram, YouTube и X (Twitter) мгновенно без водяных знаков. Самый быстрый бесплатный инструмент.",
-      hero_title: "⚡ TAEO Загрузчик видео",
+      hero_title: "⚡ TEO Загрузчик видео",
       hero_subtitle: "Скачивайте видео из TikTok, Douyin, Instagram, YouTube и X быстро",
       hero_description: "Самый быстрый бесплатный инструмент для скачивания видео из социальных сетей, включая Douyin, без водяных знаков. Поддержка высококачественного MP4.",
       input_placeholder: "Вставьте ссылку (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -549,9 +577,13 @@ const TRANSLATIONS = {
       started: "Обработка началась! Скачивание скоро начнется.",
       save_log: "Окно выбора места сохранения появится в ближайшее время (в течение 20 секунд). Пожалуйста, не закрывайте эту страницу.",
       complete_dialog: "Готово! Открытие диалога сохранения...",
+      howto_title1: "Копировать ссылку",
+      howto_title2: "Вставить URL",
+      howto_title3: "Получить видео",
       howto_title: "Как скачать видео?",
+      step_label: "Шаг",
       howto_step1: "Скопируйте ссылку на видео из TikTok, Instagram или YouTube.",
-      howto_step2: "Вставьте ссылку в поле поиска TAEO выше.",
+      howto_step2: "Вставьте ссылку в поле поиска TEO выше.",
       howto_step3: "Нажмите кнопку «Скачать», чтобы сохранить видео.",
       feature_fast_title: "Молниеносно",
       feature_fast_desc: "Скачивайте видео за считанные секунды",
@@ -564,11 +596,11 @@ const TRANSLATIONS = {
       faq_title: "Часто задаваемые вопросы",
       faq_q1: "Какие сайты поддерживаются?",
       faq_a1: "Мы поддерживаем TikTok, Douyin, Instagram, YouTube и X (Twitter). Просто вставьте ссылку.",
-      faq_q2: "TAEO бесплатен?",
-      faq_a2: "Да! TAEO полностью бесплатен. Мы существуем за счет рекламы.",
+      faq_q2: "TEO бесплатен?",
+      faq_a2: "Да! TEO полностью бесплатен. Мы существуем за счет рекламы.",
       faq_q3: "Где сохраняются видео?",
       faq_a3: "Файлы передаются напрямую и не хранятся постоянно. Конфиденциальность превыше всего!",
-      legal_notice_desc: "Скачивайте только тот контент, на который у вас есть разрешение. TAEO не несет ответственности за злоупотребление."
+      legal_notice_desc: "Скачивайте только тот контент, на который у вас есть разрешение. TEO не несет ответственности за злоупотребление."
     },
     youtube: {
       hero_title: "📺 Загрузчик видео с YouTube",
@@ -597,9 +629,9 @@ const TRANSLATIONS = {
   },
   hi: {
     home: {
-      meta_title: "TAEO - सर्वश्रेष्ठ TikTok, Douyin, Instagram, YouTube और X वीडियो डाउनलोडर",
+      meta_title: "TEO - सर्वश्रेष्ठ TikTok, Douyin, Instagram, YouTube और X वीडियो डाउनलोडर",
       meta_description: "बिना वॉटरमार्क के TikTok, Douyin, Instagram, YouTube और X (Twitter) वीडियो तुरंत डाउनलोड करें। सबसे तेज़ और मुफ़्त टूल।",
-      hero_title: "⚡ TAEO वीडियो डाउनलोडर",
+      hero_title: "⚡ TEO वीडियो डाउनलोडर",
       hero_subtitle: "TikTok, Douyin, Instagram, YouTube और X वीडियो तेज़ी से डाउनलोड करें",
       hero_description: "वॉटरmark के बिना Douyin सहित सोशल मीडिया वीडियो डाउनलोड करने का सबसे तेज़ मुफ़्त टूल। उच्च गुणवत्ता MP4 समर्थन।",
       input_placeholder: "लिंक पेस्ट करें (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -621,9 +653,13 @@ const TRANSLATIONS = {
       started: "प्रसंस्करण शुरू! आपका डाउनलोड जल्द ही शुरू होगा।",
       save_log: "सेव लोकेशन विंडो जल्द ही दिखाई देगी (20 सेकंड के भीतर)। कृपया इस पृष्ठ को बंद न करें।",
       complete_dialog: "पूर्ण! सेव डायलॉग खुल रहा है...",
+      howto_title1: "लिंक कॉपी करें",
+      howto_title2: "URL पेस्ट करें",
+      howto_title3: "वीडियो प्राप्त करें",
       howto_title: "वीडियो कैसे डाउनलोड करें?",
+      step_label: "चरण",
       howto_step1: "TikTok, Instagram या YouTube से video link कॉपी करें।",
-      howto_step2: "ऊपर TAEO सर्च बॉक्स में लिंक पेस्ट करें।",
+      howto_step2: "ऊपर TEO सर्च बॉक्स में लिंक पेस्ट करें।",
       howto_step3: "अपना वीडियो सहेजने के लिए 'डाउनलोड' बटन दबाएं।",
       feature_fast_title: "बिजली की तरह तेज़",
       feature_fast_desc: "सेकंड में वीडियो डाउनलोड करें",
@@ -636,11 +672,11 @@ const TRANSLATIONS = {
       faq_title: "अक्सर पूछे जाने वाले प्रश्न",
       faq_q1: "कौन सी साइटें समर्थित हैं?",
       faq_a1: "हम TikTok, Douyin, Instagram, YouTube और X (Twitter) का समर्थन करते हैं। बस लिंक पेस्ट करें।",
-      faq_q2: "क्या TAEO उपयोग करने के लिए स्वतंत्र है?",
-      faq_a2: "हाँ! TAEO पूरी तरह से मुफ़्त है। हम विज्ञापनों के माध्यम से अपना समर्थन करते हैं।",
+      faq_q2: "क्या TEO उपयोग करने के लिए स्वतंत्र है?",
+      faq_a2: "हाँ! TEO पूरी तरह से मुफ़्त है। हम विज्ञापनों के माध्यम से अपना समर्थन करते हैं।",
       faq_q3: "वीडियो कहाँ सहेजे जाते हैं?",
       faq_a3: "फ़ाइलें सीधे स्ट्रीम की जाती हैं और स्थायी रूप से संग्रहीत नहीं की जाती हैं। गोपनीयता पहले!",
-      legal_notice_desc: "केवल वही सामग्री डाउनलोड करें जिसकी आपके पास अनुमति है। TAEO दुरुपयोग के लिए ज़िम्मेदार नहीं है।"
+      legal_notice_desc: "केवल वही सामग्री डाउनलोड करें जिसकी आपके पास अनुमति है। TEO दुरुपयोग के लिए ज़िम्मेदार नहीं है।"
     },
     youtube: {
       hero_title: "📺 YouTube वीडियो डाउनलोडर",
@@ -663,15 +699,15 @@ const TRANSLATIONS = {
     x: {
       hero_title: "🐦 X (Twitter) वीडियो डाउनलोडर",
       hero_subtitle: "X वीडियो तुरंत उच्च गुणवत्ता में सहेजें",
-      hero_description: "बि나 वॉटरमार्क के MP4 में X (Twitter) वीडियो डाउनलोड करें। तेज़ और सरल।",
+      hero_description: "बिना वॉटरमार्क के MP4 में X (Twitter) वीडियो डाउनलोड करें। तेज़ और सरल।",
       input_placeholder: "यहाँ X (Twitter) लिंक पेस्ट करें..."
     }
   },
   de: {
     home: {
-      meta_title: "TAEO - Bester TikTok, Douyin, Instagram, YouTube & X Video Downloader",
+      meta_title: "TEO - Bester TikTok, Douyin, Instagram, YouTube & X Video Downloader",
       meta_description: "Laden Sie TikTok, Douyin, Instagram, YouTube und X (Twitter) Videos sofort ohne Wasserzeichen herunter. Das schnellste kostenlose Tool.",
-      hero_title: "⚡ TAEO Video Downloader",
+      hero_title: "⚡ TEO Video Downloader",
       hero_subtitle: "Laden Sie TikTok, Douyin, Instagram, YouTube & X Videos schnell herunter",
       hero_description: "Das schnellste kostenlose Tool zum Herunterladen von Social-Media-Videos einschließlich Douyin ohne Wasserzeichen. Hochwertige MP4-Unterstützung.",
       input_placeholder: "Link einfügen (TikTok, Douyin, Instagram, YouTube, X)...",
@@ -693,9 +729,13 @@ const TRANSLATIONS = {
       started: "Verarbeitung gestartet! Ihr Download beginnt in Kürze.",
       save_log: "Das Fenster zum Speichern wird in Kürze erscheinen (innerhalb von 20 Sekunden). Bitte schließen Sie diese Seite nicht.",
       complete_dialog: "Fertig! Speicherdialog wird geöffnet...",
+      howto_title1: "Link kopieren",
+      howto_title2: "URL einfügen",
+      howto_title3: "Video erhalten",
       howto_title: "Wie lädt man Videos herunter?",
+      step_label: "Schritt",
       howto_step1: "Kopieren Sie den Videolink von TikTok, Instagram oder YouTube.",
-      howto_step2: "Fügen Sie den Link oben in das TAEO-Suchfeld ein.",
+      howto_step2: "Fügen Sie den Link oben in das TEO-Suchfeld ein.",
       howto_step3: "Drücken Sie die Schaltfläche 'Herunterladen', um Ihr Video zu speichern.",
       feature_fast_title: "Blitzschnell",
       feature_fast_desc: "Videos in Sekunden herunterladen",
@@ -708,11 +748,11 @@ const TRANSLATIONS = {
       faq_title: "Häufig gestellte Fragen",
       faq_q1: "Welche Seiten werden unterstützt?",
       faq_a1: "Wir unterstützen TikTok, Douyin, Instagram, YouTube und X (Twitter). Fügen Sie einfach den Link ein.",
-      faq_q2: "Ist TAEO kostenlos?",
-      faq_a2: "Ja! TAEO ist völlig kostenlos. Wir finanzieren uns durch Werbung.",
+      faq_q2: "Ist TEO kostenlos?",
+      faq_a2: "Ja! TEO ist völlig kostenlos. Wir finanzieren uns durch Werbung.",
       faq_q3: "Wo werden Videos gespeichert?",
       faq_a3: "Dateien werden direkt gestreamt und nicht dauerhaft gespeichert. Privatsphäre zuerst!",
-      legal_notice_desc: "Laden Sie nur Inhalte herunter, für die Sie die Erlaubnis haben. TAEO ist nicht für Missbrauch verantwortlich."
+      legal_notice_desc: "Laden Sie nur Inhalte herunter, für die Sie die Erlaubnis haben. TEO ist nicht für Missbrauch verantwortlich."
     },
     youtube: {
       hero_title: "📺 YouTube Video Downloader",

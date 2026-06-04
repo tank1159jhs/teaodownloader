@@ -32,6 +32,7 @@ const TRANSLATIONS = {
       error_occurred: "오류 발생",
       error_default: "다운로드 처리에 실패했습니다.",
       error_unsupported: "지원하지 않는 URL 형식입니다. 영상 상세 주소를 입력해 주세요.",
+      error_retry_instruction: "잠시 후 URL을 다시 입력해 주세요.",
       ERR_BOT_BLOCKED: "봇 차단이 발생했습니다. 잠시 후 다시 시도해 주세요.",
       ERR_VIDEO_NOT_FOUND: "영상을 찾을 수 없습니다. URL을 확인해 주세요.",
       ERR_TIKTOK_SEARCH: "틱톡 검색 결과 페이지는 지원하지 않습니다. 개별 영상 링크를 입력해 주세요.",
@@ -103,6 +104,7 @@ const TRANSLATIONS = {
       error_occurred: "Error",
       error_default: "Failed to process video.",
       error_unsupported: "Unsupported URL format. Please paste a direct video link.",
+      error_retry_instruction: "Please try entering the URL again in a moment.",
       ERR_BOT_BLOCKED: "Bot protection triggered. Please try again later.",
       ERR_VIDEO_NOT_FOUND: "Video not found. Please check the URL.",
       ERR_TIKTOK_SEARCH: "TikTok search results are not supported. Use direct video link.",
@@ -174,6 +176,7 @@ const TRANSLATIONS = {
       error_occurred: "오류 발생",
       error_default: "다운로드 처리에 실패했습니다.",
       error_unsupported: "지원하지 않는 URL 형식입니다. 영상 상세 주소를 입력해 주세요.",
+      error_retry_instruction: "しばらくしてからURLを再入力してください。",
       ERR_BOT_BLOCKED: "봇 차단이 발생했습니다. 잠시 후 다시 시도해 주세요.",
       ERR_VIDEO_NOT_FOUND: "영상을 찾을 수 없습니다. URL을 확인해 주세요.",
       ERR_TIKTOK_SEARCH: "틱톡 검색 결과 페이지는 지원하지 않습니다. 개별 영상 링크를 입력해 주세요.",
@@ -245,6 +248,7 @@ const TRANSLATIONS = {
       error_occurred: "Kesalahan",
       error_default: "Gagal memproses video.",
       error_unsupported: "Format URL tidak didukung. Harap tempel tautan video langsung.",
+      error_retry_instruction: "Silakan coba masukkan URL lagi sebentar lagi.",
       ERR_BOT_BLOCKED: "Akses diblokir oleh perlindungan bot. Silakan coba lagi nanti.",
       ERR_VIDEO_NOT_FOUND: "Video tidak ditemukan. Silakan periksa URL.",
       ERR_TIKTOK_SEARCH: "Hasil pencarian TikTok tidak didukung. Gunakan tautan video langsung.",
@@ -316,6 +320,7 @@ const TRANSLATIONS = {
       error_occurred: "Erro",
       error_default: "Falha ao processar o vídeo.",
       error_unsupported: "Formato de URL não suportado. Cole um link direto do vídeo.",
+      error_retry_instruction: "Por favor, tente inserir a URL novamente em um momento.",
       ERR_BOT_BLOCKED: "Acesso bloqueado por proteção contra bots. Tente novamente mais tarde.",
       ERR_VIDEO_NOT_FOUND: "Vídeo não encontrado. Por favor, verifique a URL.",
       ERR_TIKTOK_SEARCH: "Resultados de pesquisa do TikTok não são suportados. Use o link direto do vídeo.",
@@ -387,6 +392,7 @@ const TRANSLATIONS = {
       error_occurred: "Error",
       error_default: "Error al procesar el video.",
       error_unsupported: "Formato de URL no soportado. Pega un enlace directo al video.",
+      error_retry_instruction: "Por favor, intente ingresar la URL de nuevo en un momento.",
       ERR_BOT_BLOCKED: "Acceso bloqueado por protección contra bots. Inténtalo de nuevo más tarde.",
       ERR_VIDEO_NOT_FOUND: "Video no encontrado. Por favor, comprueba la URL.",
       ERR_TIKTOK_SEARCH: "Los resultados de búsqueda de TikTok no son compatibles. Usa un enlace directo al video.",
@@ -458,6 +464,7 @@ const TRANSLATIONS = {
       error_occurred: "Lỗi",
       error_default: "Xử lý video thất bại.",
       error_unsupported: "Định dạng URL không được hỗ trợ. Vui lòng dán liên kết video trực tiếp.",
+      error_retry_instruction: "Vui lòng thử nhập lại URL sau giây lát.",
       ERR_BOT_BLOCKED: "Truy cập bị chặn bởi bảo vệ bot. Vui lòng thử lại sau.",
       ERR_VIDEO_NOT_FOUND: "Không tìm thấy video. Vui lòng kiểm tra URL.",
       ERR_TIKTOK_SEARCH: "Kết quả tìm kiếm TikTok không được hỗ trợ. Vui lòng sử dụng liên kết video trực tiếp.",
@@ -529,6 +536,7 @@ const TRANSLATIONS = {
       error_occurred: "Ошибка",
       error_default: "Не удалось обработать видео.",
       error_unsupported: "Неподдерживаемый формат URL. Пожалуйста, вставьте прямую ссылку на видео.",
+      error_retry_instruction: "Пожалуйста, попробуйте ввести URL еще раз через некоторое время.",
       ERR_BOT_BLOCKED: "Доступ заблокирован защитой от ботов. Пожалуйста, попробуйте позже.",
       ERR_VIDEO_NOT_FOUND: "Видео не найдено. Пожалуйста, проверьте URL.",
       ERR_TIKTOK_SEARCH: "Результаты поиска TikTok не поддерживаются. Пожалуйста, используйте прямую ссылку на видео.",
@@ -600,6 +608,7 @@ const TRANSLATIONS = {
       error_occurred: "त्रुटि",
       error_default: "वीडियो को संसाधित करने में विफल।",
       error_unsupported: "असमर्थित URL प्रारूप। कृपया सीधा वीडियो लिंक पेस्ट करें।",
+      error_retry_instruction: "कृपया कुछ देर बाद फिर से URL दर्ज करने का प्रयास करें।",
       ERR_BOT_BLOCKED: "बॉट सुरक्षा द्वारा एक्सेस ब्लॉक कर दिया गया। कृपया बाद में पुन: प्रयास करें।",
       ERR_VIDEO_NOT_FOUND: "वीडियो नहीं मिला। कृपया URL की जाँच करें।",
       ERR_TIKTOK_SEARCH: "TikTok खोज परिणाम समर्थित नहीं हैं। कृपया सीधे वीडियो लिंक का उपयोग करें।",
@@ -671,6 +680,7 @@ const TRANSLATIONS = {
       error_occurred: "Fehler",
       error_default: "Video konnte nicht verarbeitet werden.",
       error_unsupported: "Nicht unterstütztes URL-Format. Bitte fügen Sie einen direkten Videolink ein.",
+      error_retry_instruction: "Bitte versuchen Sie in Kürze erneut, die URL einzugeben.",
       ERR_BOT_BLOCKED: "Zugriff durch Bot-Schutz blockiert. Bitte versuchen Sie es später erneut.",
       ERR_VIDEO_NOT_FOUND: "Video nicht gefunden. Bitte überprüfen Sie die URL.",
       ERR_TIKTOK_SEARCH: "TikTok-Suchergebnisse werden nicht unterstützt. Bitte verwenden Sie einen direkten Videolink.",
@@ -799,13 +809,18 @@ function showError(msg) {
   const langData = TRANSLATIONS[currentLang] || TRANSLATIONS['ko'];
   const t = langData.home;
   
+  let translatedMsg = "";
   if (t[msg]) {
-    errorMessage.textContent = t[msg];
+    translatedMsg = t[msg];
   } else if (msg && (msg.includes('지원하지 않는 URL') || msg.includes('Unsupported URL'))) {
-    errorMessage.textContent = t.error_unsupported;
+    translatedMsg = t.error_unsupported;
   } else {
-    errorMessage.textContent = msg || t.error_default;
+    translatedMsg = msg || t.error_default;
   }
+
+  const instruction = t.error_retry_instruction || "";
+  errorMessage.innerHTML = `${translatedMsg}<br><small style="display:block;margin-top:10px;opacity:0.8;">${instruction}</small>`;
+  
   downloadBtn.disabled = false;
 }
 
@@ -905,22 +920,41 @@ async function downloadVideo() {
     const progressId = await trackProgress(url);
     showSuccess();
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = '/api/download';
-    
-    const fields = { url, progressId };
-    for (const key in fields) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = fields[key];
-      form.appendChild(input);
+    const response = await fetch('/api/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, progressId })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      showError(errData.message || t.error_default);
+      return;
     }
-    
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+
+    // Trigger download
+    const contentDisposition = response.headers.get('Content-Disposition');
+    let filename = 'video.mp4';
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+      if (filenameMatch && filenameMatch[1]) {
+        filename = filenameMatch[1].replace(/['"]/g, '');
+      }
+      // Check for UTF-8 filename
+      if (contentDisposition.includes("filename*=UTF-8''")) {
+        filename = decodeURIComponent(contentDisposition.split("filename*=UTF-8''")[1]);
+      }
+    }
+
+    const blob = await response.blob();
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(downloadUrl);
 
   } catch (err) {
     showError(t.error_default);

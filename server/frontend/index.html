@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title data-i18n="meta_title">TEO - 최고의 틱톡, 인스타그램, 유튜브 영상 다운로더</title>
+  <meta name="description" content="워터마크 없는 틱톡, 인스타, 유튜브 영상을 즉시 다운로드하세요. 가장 빠르고 무료인 소셜 미디어 도구입니다." data-i18n-content="meta_description">
+  
+  <link rel="canonical" href="https://teodown.com/">
+  <link rel="alternate" hreflang="x-default" href="https://teodown.com/">
+  <link rel="alternate" hreflang="ko" href="https://teodown.com/ko/">
+  <link rel="alternate" hreflang="ja" href="https://teodown.com/ja/">
+  <link rel="alternate" hreflang="en" href="https://teodown.com/en/">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="manifest" href="/sw.js">
+
+  <!-- CSS & Fonts -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://teodown.com/">
+  <meta property="og:title" content="TEO - Fast Video Downloader" data-i18n-content="meta_title">
+  <meta property="og:description" content="Download social media videos instantly without watermark." data-i18n-content="meta_description">
+  <meta property="og:image" content="https://teodown.com/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://teodown.com/">
+  <meta property="twitter:title" content="TEO - Fast Video Downloader" data-i18n-content="meta_title">
+  <meta property="twitter:description" content="Download social media videos instantly without watermark." data-i18n-content="meta_description">
+
+  <!-- Monetag Multitag -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="245804" async data-cfasync="false"></script>
+
+  <!-- Adsterra Social Bar -->
+  <script src="https://pl29625516.effectivecpmnetwork.com/bd/59/8c/bd598c6350a11a1436013631c090370e.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "TEO Video Downloader",
+    "operatingSystem": "All",
+    "applicationCategory": "MultimediaApplication",
+    "description": "Download videos from TikTok, Douyin, Instagram, YouTube, and X without watermark for free.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "1250"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="hero">
+    <div class="top-nav">
+      <div class="lang-switcher">
+        <select id="langSelect" aria-label="Select Language">
+          <option value="ko">한국어</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="id">Bahasa Indonesia</option>
+          <option value="pt">Português</option>
+          <option value="es">Español</option>
+          <option value="vi">Tiếng Việt</option>
+          <option value="ru">Русский</option>
+          <option value="hi">हिन्दी</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title" data-i18n="hero_title">⚡ TEO Video Downloader</h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">Download TikTok, Instagram, YouTube & X Videos Fast</p>
+      
+      <!-- [추가] 지원 플랫폼 브랜드 아이콘 노출 (SEO Title 추가) -->
+      <div class="brand-badges">
+        <i class="fab fa-tiktok" title="TikTok Downloader"></i>
+        <i class="fas fa-music" title="Douyin Downloader"></i>
+        <i class="fab fa-instagram" title="Instagram Downloader"></i>
+        <i class="fab fa-youtube" title="YouTube Downloader"></i>
+        <i class="fab fa-twitter" title="Twitter/X Downloader"></i>
+      </div>
+
+      <p class="hero-description" data-i18n="hero_description">Free online tool to download social media videos instantly without watermark.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="download-card">
+      <div class="input-group">
+        <input type="text" id="urlInput" class="url-input" placeholder="Paste link here..." data-i18n-placeholder="input_placeholder" aria-label="Video URL">
+        <button id="downloadBtn" class="download-btn">
+          <i class="fas fa-download"></i> <span data-i18n="download_btn">Download</span>
+        </button>
+      </div>
+
+      <!-- State: Loading -->
+      <div id="loadingUI" class="status-ui loading hidden">
+        <div class="spinner"></div>
+        <p class="status-text" data-i18n="loading">영상 분석 중...</p>
+      </div>
+
+      <!-- State: Success & Progress -->
+      <div id="successUI" class="status-ui success hidden">
+        <div class="status-icon"><i class="fas fa-check-circle"></i></div>
+        <h3 data-i18n="success_title">✅ 요청 완료</h3>
+        <p class="status-desc" data-i18n="started">처리가 시작되었습니다! 곧 다운로드가 진행됩니다.</p>
+        
+        <div id="progressContainer" class="progress-container">
+          <div class="progress-bar-wrapper">
+            <div id="progressBar" class="progress-fill"></div>
+          </div>
+          <div class="progress-info">
+            <span id="progressText">0%</span>
+            <span class="pulse-dot"></span>
+          </div>
+        </div>
+
+        <p class="small-notice" data-i18n="save_log">저장 위치 선택 창이 나타날 때까지 최대 20초 정도 소요될 수 있습니다. 창이 뜰 때까지 잠시만 기다려 주세요.</p>
+        <button onclick="resetForm()" class="btn-secondary" data-i18n="download_another">추가 다운로드</button>
+      </div>
+
+      <!-- State: Error -->
+      <div id="errorUI" class="status-ui error hidden">
+        <div class="status-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <h3 data-i18n="error_occurred">❌ 오류 발생</h3>
+        <p id="errorMessage" class="error-msg">다운로드 처리에 실패했습니다.</p>
+        <button onclick="resetForm()" class="btn-primary" data-i18n="retry_btn">다시 시도</button>
+      </div>
+    </section>
+
+    <!-- Adsterra Native Banner -->
+    <div class="ad-section">
+      <script async="async" data-cfasync="false" src="https://pl29625517.effectivecpmnetwork.com/f0e7d8a70417dbfa7e95c0d9c1ec1031/invoke.js"></script>
+      <div id="container-f0e7d8a70417dbfa7e95c0d9c1ec1031"></div>
+    </div>
+
+    <!-- How to Use (Premium Minimalist Flow) -->
+    <section class="how-to">
+      <h2 class="section-title" data-i18n="howto_title">How to Download Videos?</h2>
+      <div class="howto-grid">
+        <!-- Step 1 -->
+        <div class="howto-step" data-step="1">
+          <div class="step-icon">🔗</div>
+          <h4 data-i18n="howto_title1">Copy Link</h4>
+          <p data-i18n="howto_step1">Copy the video URL from TikTok, Instagram, or YouTube.</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="howto-step" data-step="2">
+          <div class="step-icon">📥</div>
+          <h4 data-i18n="howto_title2">Paste URL</h4>
+          <p data-i18n="howto_step2">Paste the link into the TEO input box above.</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="howto-step" data-step="3">
+          <div class="step-icon">🚀</div>
+          <h4 data-i18n="howto_title3">Get Video</h4>
+          <p data-i18n="howto_step3">Click 'Download' and save your high-quality video.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+      <div class="feature-item">
+        <div class="feature-icon">🚀</div>
+        <h4 data-i18n="feature_fast_title">초고속 다운로드</h4>
+        <p data-i18n="feature_fast_desc">몇 초 만에 영상을 소장하세요</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💎</div>
+        <h4 data-i18n="feature_hq_title">고화질 유지</h4>
+        <p data-i18n="feature_hq_desc">가능한 최상의 화질을 제공합니다</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">✨</div>
+        <h4 data-i18n="feature_wm_title">워터마크 제거</h4>
+        <p data-i18n="feature_wm_desc">깨끗한 원본 그대로 다운로드</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🛡️</div>
+        <h4 data-i18n="feature_sec_title">안전한 보안</h4>
+        <p data-i18n="feature_sec_desc">사용자의 개인정보를 보호합니다</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <h2 class="section-title" data-i18n="faq_title">자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span data-i18n="faq_q1">어떤 플랫폼을 지원하나요?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer" data-i18n="faq_a1">틱톡, 인스타그램(릴스), 유튜브를 지원합니다. URL만 붙여넣으면 끝!</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span data-i18n="faq_q2">정말 무료인가요?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer" data-i18n="faq_a2">네! TEO는 누구나 무료로 이용할 수 있는 서비스입니다.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span data-i18n="faq_q3">영상이 어디에 저장되나요?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer" data-i18n="faq_a3">서버에 영구 저장되지 않고 즉시 사용자에게 스트리밍됩니다. 안심하세요!</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="legal-box">
+      <p><i class="fas fa-info-circle"></i> <span data-i18n="legal_notice_desc">반드시 저작권자의 허가를 받은 콘텐츠만 다운로드하세요. TEO는 도구일 뿐이며 사용자의 이용 방식에 책임을 지지 않습니다.</span></p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <p class="copyright">&copy; 2026 TEO Video Downloader. All rights reserved.</p>
+  </footer>
+
+  <script src="/main.js"></script>
+</body>
+</html>

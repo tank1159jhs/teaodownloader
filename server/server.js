@@ -68,7 +68,7 @@ const PLATFORM_CONFIGS = {
     useProxy: true,
     extraArgs: [
       '--no-playlist',
-      '--impersonate', 'chrome',
+      '--impersonate', 'safari',
       '--extractor-args', 'tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com',
       '--add-header', 'Accept-Language: en-US,en;q=0.9,ko;q=0.8'
     ]
@@ -79,9 +79,9 @@ const PLATFORM_CONFIGS = {
     useProxy: true,
     extraArgs: [
       '--no-playlist',
-      '--impersonate', 'chrome',
+      '--impersonate', 'safari',
       '--add-header', 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8',
-      '--extractor-args', 'douyin:no-watermark=true'
+      '--extractor-args', 'douyin:no-watermark=true;app_id=1128'
     ]
   },
   instagram: {

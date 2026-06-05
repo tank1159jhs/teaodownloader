@@ -54,7 +54,7 @@ const PLATFORM_CONFIGS = {
     format: 'bv+ba/b',
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     referer: 'https://www.youtube.com/',
-    useProxy: true,
+    useProxy: false,
     extraArgs: [
       '--extractor-args', 'youtube:player_client=android,web',
       '--force-ipv4',
@@ -65,7 +65,7 @@ const PLATFORM_CONFIGS = {
   tiktok: {
     domains: ['tiktok.com'],
     format: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-    useProxy: true,
+    useProxy: false,
     extraArgs: [
       '--no-playlist',
       '--impersonate', 'safari',
@@ -74,14 +74,15 @@ const PLATFORM_CONFIGS = {
     ]
   },
   douyin: {
-    domains: ['douyin.com', 'iesdouyin.com'],
-    format: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-    useProxy: true,
+    domains: ["douyin.com", "iesdouyin.com"],
+    format: "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
+    useProxy: false,
     extraArgs: [
-      '--no-playlist',
-      '--impersonate', 'safari',
-      '--add-header', 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8',
-      '--extractor-args', 'douyin:no-watermark=true;app_id=1128'
+      "--no-playlist",
+      "--impersonate", "safari",
+      "--add-header", "Referer: https://www.douyin.com/",
+      "--add-header", "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8",
+      "--extractor-args", "douyin:no-watermark=true;app_id=1128"
     ]
   },
   instagram: {
@@ -89,7 +90,7 @@ const PLATFORM_CONFIGS = {
     format: 'best',
     userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
     referer: 'https://www.instagram.com/',
-    useProxy: true,
+    useProxy: false,
     extraArgs: ['--no-playlist']
   },
   twitter: {
@@ -97,7 +98,7 @@ const PLATFORM_CONFIGS = {
     format: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     referer: 'https://x.com/',
-    useProxy: true,
+    useProxy: false,
     extraArgs: ['--no-playlist']
   }
 };

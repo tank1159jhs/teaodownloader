@@ -96,10 +96,13 @@ const PLATFORM_CONFIGS = {
   tiktok: {
     domains: ['tiktok.com'],
     format: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-    referer: 'https://www.google.com/',
     useProxy: true,
-    extraArgs: ['--no-playlist']
+    extraArgs: [
+      '--no-playlist',
+      '--impersonate', 'chrome',
+      '--extractor-args', 'tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com',
+      '--add-header', 'Accept-Language: en-US,en;q=0.9,ko;q=0.8'
+    ]
   },
   douyin: {
     domains: ['douyin.com', 'iesdouyin.com'],
@@ -242,7 +245,9 @@ function mapYtDlpErrorMessage(errorMessage) {
     if (errorMessage.includes('tiktok.com/search')) return 'ERR_TIKTOK_SEARCH';
     return 'ERR_UNSUPPORTED_URL';
   }
-  if (errorMessage.includes('Unable to extract universal data')) return 'ERR_EXTRACT_FAILED';
+  if (errorMessage.includes('Unable to extract universal data') || errorMessage.includes('Unexpected response from webpage')) {
+    return 'ERR_EXTRACT_FAILED';
+  }
   return 'ERR_DOWNLOAD_FAILED';
 }
 

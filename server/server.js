@@ -68,12 +68,7 @@ const PLATFORM_CONFIGS = {
     useProxy: false,
     useCookies: false,
     extraArgs: [
-      '--no-playlist',
-      '--impersonate', 'chrome',
-      '--extractor-args', 'tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com',
-      '--add-header', 'Accept-Language: en-US,en;q=0.9,ko;q=0.8',
-      '--add-header', 'Referer: https://www.tiktok.com/',
-      '--add-header', 'Sec-Fetch-Mode: navigate'
+      '--no-playlist'
     ]
   },
   douyin: {

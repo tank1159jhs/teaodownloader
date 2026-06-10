@@ -56,7 +56,7 @@ const PLATFORM_CONFIGS = {
     referer: 'https://www.youtube.com/',
     useProxy: false,
     extraArgs: [
-      '--extractor-args', 'youtube:player_client=android,web',
+      '--extractor-args', 'youtube:player_client=ios,android,web_embedded',
       '--force-ipv4',
       '--no-playlist',
       '--no-check-certificates'
@@ -68,9 +68,10 @@ const PLATFORM_CONFIGS = {
     useProxy: false,
     extraArgs: [
       '--no-playlist',
-      '--impersonate', 'safari',
+      '--impersonate', 'chrome',
       '--extractor-args', 'tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com',
-      '--add-header', 'Accept-Language: en-US,en;q=0.9,ko;q=0.8'
+      '--add-header', 'Accept-Language: en-US,en;q=0.9,ko;q=0.8',
+      '--add-header', 'Referer: https://www.tiktok.com/'
     ]
   },
   douyin: {
@@ -79,7 +80,7 @@ const PLATFORM_CONFIGS = {
     useProxy: false,
     extraArgs: [
       "--no-playlist",
-      "--impersonate", "safari",
+      "--impersonate", "chrome",
       "--add-header", "Referer: https://www.douyin.com/",
       "--add-header", "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8",
       "--extractor-args", "douyin:no-watermark=true;app_id=1128"

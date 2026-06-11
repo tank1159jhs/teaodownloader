@@ -15,7 +15,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 const FRONTEND_PATH = path.join(__dirname, '../frontend');
-const TEMP_DIR = process.env.TEMP_DIR || '/dev/shm'; // RAM Disk for ultra speed
+// 운영 서버(Linux)의 RAM Disk(/dev/shm)를 우선 사용하되, 권한이 없거나 없는 환경(macOS 등)에서는 로컬 temp 사용
+const DEFAULT_TEMP = fs.existsSync('/dev/shm') ? '/dev/shm' : path.join(__dirname, 'temp');
+const TEMP_DIR = process.env.TEMP_DIR || DEFAULT_TEMP; 
 
 // 설정
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
@@ -56,7 +58,7 @@ const PLATFORM_CONFIGS = {
     referer: 'https://www.youtube.com/',
     useProxy: false,
     extraArgs: [
-      '--extractor-args', 'youtube:player_client=android,ios,web;pot_provider=getpot;getpot_bgutil_http_url=http://localhost:8080/rpc',
+      '--extractor-args', 'youtube:player_client=android,ios,web;pot_provider=getpot;getpot_bgutil_http_url=http://localhost:8090/rpc',
       '--force-ipv4',
       '--no-playlist',
       '--no-check-certificates'

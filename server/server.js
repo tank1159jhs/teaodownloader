@@ -59,6 +59,7 @@ const PLATFORM_CONFIGS = {
     useProxy: false,
     extraArgs: [
       '--extractor-args', 'youtube:player_client=android,ios,web;pot_provider=getpot;getpot_bgutil_http_url=http://localhost:8090/rpc',
+      '--cookies', '/home/opc/cookies.txt',
       '--force-ipv4',
       '--no-playlist',
       '--no-check-certificates'

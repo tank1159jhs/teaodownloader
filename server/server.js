@@ -70,7 +70,7 @@ const PLATFORM_CONFIGS = {
     domains: ['tiktok.com'],
     format: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
     useProxy: true,
-    useCookies: false,
+    useCookies: true,
     extraArgs: [
       '--proxy', 'socks5://127.0.0.1:1080',
       '--no-playlist',
@@ -226,7 +226,8 @@ function mapYtDlpErrorMessage(errorMessage) {
   }
   if (errorMessage.includes('Unable to extract universal data') || 
       errorMessage.includes('Unexpected response from webpage') ||
-      errorMessage.includes('Fresh cookies')
+      errorMessage.includes('Fresh cookies') ||
+      errorMessage.includes('rehydration')
   ) {
     return 'ERR_EXTRACT_FAILED';
   }
@@ -397,11 +398,11 @@ app.post('/api/analyze', async (req, res) => {
       const { stdout: metadataJson } = await executeYtDlp([url, '--dump-json'], config, 60000);
       const metadata = JSON.parse(metadataJson);
       setCache(url, metadata);
-      return metadata;
+      return { success: true, metadata };
     } catch (err) {
       console.error(`[PRE-FETCH ERR] ${err.message}`);
       pendingAnalyzes.delete(url);
-      throw err;
+      return { success: false, error: err };
     }
   })();
   pendingAnalyzes.set(url, analysisPromise);
@@ -427,9 +428,13 @@ app.post('/api/download', async (req, res) => {
     let metadata;
     const cached = metadataCache.get(url);
     const pending = pendingAnalyzes.get(url);
-    if (cached) metadata = cached.data;
-    else if (pending) metadata = await pending;
-    else {
+    if (cached) {
+      metadata = cached.data;
+    } else if (pending) {
+      const result = await pending;
+      if (!result.success) throw result.error;
+      metadata = result.metadata;
+    } else {
       const { stdout: metadataJson } = await executeYtDlp([url, '--dump-json'], config, 45000);
       metadata = JSON.parse(metadataJson);
     }

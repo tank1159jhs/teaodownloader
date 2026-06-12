@@ -59,7 +59,6 @@ const PLATFORM_CONFIGS = {
     useProxy: true,
     useCookies: true,
     extraArgs: [
-      '--proxy', 'socks5://127.0.0.1:1080',
       '--extractor-args', 'youtube:player_client=android,ios,web;pot_provider=getpot;getpot_bgutil_http_url=http://localhost:8090/get_pot',
       '--force-ipv4',
       '--no-playlist',
@@ -72,7 +71,6 @@ const PLATFORM_CONFIGS = {
     useProxy: true,
     useCookies: false,
     extraArgs: [
-      '--proxy', 'socks5://127.0.0.1:1080',
       '--no-playlist',
       '--impersonate', 'chrome'
     ]

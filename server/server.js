@@ -53,13 +53,14 @@ function setCache(url, data) {
 const PLATFORM_CONFIGS = {
   youtube: {
     domains: ['youtube.com', 'youtu.be'],
-    format: 'bv+ba/b',
+    format: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     referer: 'https://www.youtube.com/',
     useProxy: false,
+    useCookies: true,
     extraArgs: [
+      '--impersonate', 'chrome',
       '--extractor-args', 'youtube:player_client=android,ios,web;pot_provider=getpot;getpot_bgutil_http_url=http://localhost:8090/get_pot',
-      '--cookies', '/home/opc/cookies.txt',
       '--force-ipv4',
       '--no-playlist',
       '--no-check-certificates',
@@ -72,7 +73,8 @@ const PLATFORM_CONFIGS = {
     useProxy: false,
     useCookies: false,
     extraArgs: [
-      '--no-playlist'
+      '--no-playlist',
+      '--impersonate', 'chrome'
     ]
   },
   douyin: {
@@ -176,8 +178,10 @@ async function executeYtDlp(args, config, timeout, jobId = null) {
       if (config.extraArgs) ytdlpArgs.push(...config.extraArgs);
     }
     
-    const cookiesPath = process.env.YTDLP_COOKIES || '/home/opc/cookies.txt';
-    if (fs.existsSync(cookiesPath)) ytdlpArgs.push('--cookies', cookiesPath);
+    if (config && config.useCookies !== false) {
+      const cookiesPath = process.env.YTDLP_COOKIES || '/home/opc/cookies.txt';
+      if (fs.existsSync(cookiesPath)) ytdlpArgs.push('--cookies', cookiesPath);
+    }
     
     if (process.env.YTDLP_PROXY && config && config.useProxy === true) {
       ytdlpArgs.push('--proxy', process.env.YTDLP_PROXY);

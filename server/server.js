@@ -72,6 +72,7 @@ const PLATFORM_CONFIGS = {
     useProxy: true,
     useCookies: false,
     extraArgs: [
+      '--proxy', 'socks5://127.0.0.1:1080',
       '--no-playlist',
       '--impersonate', 'chrome'
     ]
@@ -260,16 +261,16 @@ const SEO_TRANSLATIONS = {
     x: { title: "TEO - X (Twitter) Video Downloader | Save Twitter Videos", description: "Download X (Twitter) videos instantly in high quality MP4. Best tool to save Twitter videos without watermark." }
   },
   ja: {
-    home: { title: "TEO - TikTok, Douyin, Instagram, YouTube, X 動画ダウンロード", description: "TikTok、Douyin(抖音)、Instagram、YouTube、Xの動画を即座에 다운로드. 워터마크 없이, 완전 무료의 최강 툴." },
-    youtube: { title: "TEO - YouTube 動画保存・ダウンロード | 高画質 MP4", description: "YouTube動画をウォーターマークなしで高画質保存。TEOは最속으로 안전한 YouTube 저장 도구입니다." },
-    tiktok: { title: "TEO - TikTok & Douyin 保存 | ウォーターマークなし", description: "TikTokやDouyinの動画をロゴなしで保存。TikTok動画保存の最も簡単な方法はTEO입니다." },
-    instagram: { title: "TEO - Instagram 動画 & リール 保存", description: "Instagramのリール、動画、ストーリーをロゴなし高画질로 저장. 素早く簡単なインスタ保存ツール." },
-    x: { title: "TEO - X (Twitter) 動画保存・ダウンロード", description: "X(Twitter)의 영상을 고화질로 즉시 저장. 워터마크 없는 트위터 영상 저장 도구." }
+    home: { title: "TEO - TikTok, Douyin, Instagram, YouTube, X 動画ダウンロード", description: "TikTok, Douyin, Instagram, YouTube, Xの動画をロゴなしで即座にダウンロードできる最速の無料ツールです。" },
+    youtube: { title: "TEO - YouTube 動画保存・ダウンロード | 高画質 MP4", description: "YouTube動画をウォーターマークなしで高画質保存。TEOは最も速くて安全なYouTube保存ツールです。" },
+    tiktok: { title: "TEO - TikTok & Douyin 保存 | ウォーターマークなし", description: "TikTokやDouyinの動画をロゴなしで保存。TikTok動画保存の最も簡単な方法はTEOです。" },
+    instagram: { title: "TEO - Instagram 動画 & リール 保存", description: "Instagramのリール、動画、ストーリーをロゴなし高画質で保存. 素早く簡単なインスタ保存ツールです。" },
+    x: { title: "TEO - X (Twitter) 動画保存・ダウンロード | 高画質 Twitter 保存", description: "X(Twitter)の動画を即座に高画質MP4でダウンロード. ウォーターマークなしのTwitter動画保存ツール。" }
   },
   id: {
     home: { title: "TEO - Pengunduh Video TikTok, Douyin, Instagram, YouTube & X Terbaik", description: "Unduh video TikTok, Douyin, Instagram, YouTube, dan X tanpa watermark secara instan. Pengunduh video gratis tercepat." },
     youtube: { title: "TEO - Pengunduh Video YouTube | Simpan MP4 Kualitas Tinggi", description: "Unduh video YouTube dalam MP4 kualitas tinggi. TEO adalah alat tercepat dan teraman untuk menyimpan video YouTube secara gratis." },
-    tiktok: { title: "TEO - Pengunduh TikTok & Douyin | Tanpa Watermark", description: "Unduh video TikTok dan Douyin tanpa watermark. Cara termudah untuk menyimpan video TikTok online dengan TEO." },
+    tiktok: { title: "TEO - Pengunduh TikTok & Douyin | Tanpa Watermark", description: "Unduh video TikTok dan Douyin tanpa watermark. Cara termudah untuk menyimpan video TikTok online with TEO." },
     instagram: { title: "TEO - Pengunduh Video & Reels Instagram", description: "Unduh Instagram Reels, video, dan cerita dalam kualitas tinggi tanpa watermark. Pengunduh Instagram yang cepat dan gratis." },
     x: { title: "TEO - Pengunduh Video X (Twitter) | Simpan Video Twitter", description: "Unduh video X (Twitter) secara instan dalam MP4 kualitas tinggi. Alat terbaik untuk menyimpan video Twitter tanpa watermark." }
   },
@@ -283,7 +284,7 @@ const SEO_TRANSLATIONS = {
   es: {
     home: { title: "TEO - El mejor descargador de videos de TikTok, Douyin, Instagram, YouTube y X", description: "Descarga videos de TikTok, Douyin, Instagram, YouTube y X sin marca de agua al instante. El descargador de videos gratuito más rápido." },
     youtube: { title: "TEO - Descargador de videos de YouTube | Guardar MP4 de alta calidad", description: "Descarga videos de YouTube en MP4 de alta calidad. TEO es la herramienta más rápida y segura para guardar videos de YouTube gratis." },
-    tiktok: { title: "TEO - Descargador de TikTok y Douyin | Sin marca de agua", description: "Descarga videos de TikTok y Douyin sin marca de agua. La forma más fácil de guardar videos de TikTok en línea con TEO." },
+    tiktok: { title: "TEO - Descargador de TikTok y Douyin | Sin marca de agua", description: "Descarga videos de TikTok and Douyin sin marca de agua. La forma más fácil de guardar videos de TikTok en línea con TEO." },
     instagram: { title: "TEO - Descargador de videos y Reels de Instagram", description: "Descarga Instagram Reels, videos e historias en alta calidad sin marca de agua. Descargador de Instagram rápido y gratuito." },
     x: { title: "TEO - Descargador de videos de X (Twitter) | Guardar videos de Twitter", description: "Descarga videos de X (Twitter) al instante en MP4 de alta calidad. La mejor herramienta para guardar videos de Twitter sin marca de agua." }
   },
@@ -298,15 +299,15 @@ const SEO_TRANSLATIONS = {
     home: { title: "TEO - Лучший загрузчик видео из TikTok, Douyin, Instagram, YouTube и X", description: "Скачивайте видео из TikTok, Douyin, Instagram, YouTube и X без водяных знаков мгновенно. Самый быстрый бесплатный загрузчик видео." },
     youtube: { title: "TEO - Загрузчик видео с YouTube | Скачать MP4 в высоком качестве", description: "Скачивайте видео с YouTube в высоком качестве MP4. TEO — самый быстрый и безопасный инструмент для бесплатного сохранения видео с YouTube." },
     tiktok: { title: "TEO - Загрузчик из TikTok и Douyin | Без водяных знаков", description: "Скачивайте видео из TikTok и Douyin без водяных знаков. Самый простой способ сохранить видео из TikTok онлайн с помощью TEO." },
-    instagram: { title: "TEO - Загрузчик видео и Reels из Instagram", description: "Скачивайте Reels, видео и истории из Instagram в высоком качестве без водяных знаков. Быстрый и бесплатный загрузчик из Instagram." },
-    x: { title: "TEO - Загрузчик видео из X (Twitter) | Сохранить видео из Twitter", description: "Скачивайте видео из X (Twitter) мгновенно в высоком качестве MP4. Лучший инструмент для сохранения видео из Twitter без водяных знаков." }
+    instagram: { title: "TEO - Загрузчик видео и Reels из Instagram", description: "Скачивайте Reels, video и истории из Instagram в высоком качестве без водяных знаков. Быстрый и бесплатный загрузчик из Instagram." },
+    x: { title: "TEO - Загрузчик video из X (Twitter) | Сохранить video из Twitter", description: "Скачивайте video из X (Twitter) мгновенно в высоком качестве MP4. Лучший инструмент для сохранения video из Twitter без водяных знаков." }
   },
   hi: {
-    home: { title: "TEO - सर्वश्रेष्ठ TikTok, Douyin, Instagram, YouTube और X वीडियो डाउनलोडर", description: "TikTok, Douyin, Instagram, YouTube और X वीडियो बिना वॉटरmark के तुरंत 다운로드 करें। सबसे तेज़ मुफ़्त वीडियो डाउनलोडर।" },
+    home: { title: "TEO - सर्वश्रेष्ठ TikTok, Douyin, Instagram, YouTube और X वीडियो डाउनलोडर", description: "TikTok, Douyin, Instagram, YouTube और X वीडियो बिना वॉटरमार्क के तुरंत डाउनलोड करें। सबसे तेज़ मुफ़्त वीडियो डाउनलोडर।" },
     youtube: { title: "TEO - YouTube वीडियो डाउनलोडर | उच्च गुणवत्ता MP4 सहेजें", description: "उच्च गुणवत्ता वाले MP4 में YouTube वीडियो डाउनलोड करें। TEO YouTube वीडियो को मुफ्त में सहेजने का सबसे तेज़ और सुरक्षित उपकरण है।" },
     tiktok: { title: "TEO - TikTok और Douyin डाउनलोडर | बिना वॉटरमार्क के", description: "बिना वॉटरमार्क के TikTok और Douyin वीडियो डाउनलोड करें। TEO के साथ TikTok वीडियो को ऑनलाइन सहेजने का सबसे आसान तरीका।" },
-    instagram: { title: "TEO - Instagram वीडियो और रील्स डाउनलोडer", description: "Instagram रील्स, वीडियो और कहानियों को बिना वॉटरमार्क के उच्च गुणवत्ता में 다운로드 करें। तेज़ और मुफ़्त Instagram 다운로드er." },
-    x: { title: "TEO - X (Twitter) वीडियो डाउनलोडर | ट्विटर वीडियो सहेजें", description: "उच्च गुणवत्ता वाले MP4 में तुरंत X (Twitter) 영상 다운로드. 트위터 영상을 워터마크 없이 저장하는 최상의 툴." }
+    instagram: { title: "TEO - Instagram वीडियो और रील्स डाउनलोडर", description: "Instagram रील्स, video और कहानियों को बिना वॉटरमार्क के उच्च गुणवत्ता में डाउनलोड करें। तेज़ और मुफ़्त Instagram डाउनलोडर।" },
+    x: { title: "TEO - X (Twitter) वीडियो डाउनलोडर | ट्विटर वीडियो सहेजें", description: "उच्च गुणवत्ता वाले MP4 में तुरंत X (Twitter) वीडियो डाउनलोड करें। बिना वॉटरमार्क के ट्विटर वीडियो सहेजने के लिए सबसे अच्छा टूल।" }
   },
   de: {
     home: { title: "TEO - Bester Video Downloader für TikTok, Douyin, Instagram, YouTube & X", description: "Laden Sie TikTok-, Douyin-, Instagram-, YouTube- und X-Videos sofort ohne Wasserzeichen herunter. Der schnellste kostenlose Video-Downloader." },

@@ -174,29 +174,29 @@ const TRANSLATIONS = {
   ja: {
     home: {
       meta_title: "TEO - TikTok, Douyin, Instagram, YouTube, X 動画ダウンロード保存",
-      meta_description: "TikTok、Douyin(抖音)、Instagram、YouTube、Xの動画を即座にダウンロード。ウォーターマークなし, 완전 무료의 최강 툴.",
+      meta_description: "TikTok, Douyin(抖音), Instagram, YouTube, Xの動画をロゴなしで即座にダウンロード。最速かつ無料の動画保存ツールです。",
       hero_title: "⚡ TEO 動画保存・ダウンロード",
-      hero_subtitle: "TikTok, Douyin, Insta, YouTube, X 動画を最속 保存",
-      hero_description: "TikTok、Douyin、Instagram、YouTube、X의 영상를 워터마크 없이 저장하는 최강의 무료 도구입니다.",
-      input_placeholder: "여기에 영상 링크(TikTok, Douyin, Insta, YouTube, X)를 붙여넣으세요...",
-      download_btn: "다운로드",
-      loading: "영상 분석 중...",
-      error_occurred: "오류 발생",
-      error_default: "다운로드 처리에 실패했습니다.",
-      error_unsupported: "지원하지 않는 URL 형식입니다. 영상 상세 주소를 입력해 주세요.",
+      hero_subtitle: "TikTok, Douyin, Insta, YouTube, X 動画を最速保存",
+      hero_description: "DouyinやSNSの動画をロゴ(ウォーターマーク)なしで即座に保存できる、最速かつ無料の動画ダウンロードツールです。",
+      input_placeholder: "動画リンク(TikTok, Douyin, Insta, YouTube, X)をここに貼り付け...",
+      download_btn: "ダウンロード",
+      loading: "動画を分析中...",
+      error_occurred: "エラーが発生しました",
+      error_default: "ダウンロード処理に失敗しました。",
+      error_unsupported: "サポートされていないURL形式です。動画の個別リンクを入力してください。",
       error_retry_instruction: "しばらくしてからURLを再入力してください。",
-      ERR_BOT_BLOCKED: "봇 차단이 발생했습니다. 잠시 후 다시 시도해 주세요.",
-      ERR_VIDEO_NOT_FOUND: "영상을 찾을 수 없습니다. URL을 확인해 주세요.",
-      ERR_TIKTOK_SEARCH: "틱톡 검색 결과 페이지는 지원하지 않습니다. 개별 영상 링크를 입력해 주세요.",
-      ERR_UNSUPPORTED_URL: "지원하지 않는 URL 형식입니다.",
-      ERR_EXTRACT_FAILED: "데이터 추출에 실패했습니다. 최신 영상이거나 일시적 제한일 수 있습니다.",
-      ERR_DOWNLOAD_FAILED: "다운로드에 실패했습니다. 다시 시도해 주세요.",
-      retry_btn: "다시 시도",
-      success_title: "✅ 요청 완료",
-      download_another: "추가 다운로드",
-      started: "처리가 시작되었습니다! 곧 다운로드가 진행됩니다.",
-      save_log: "저장 위치 선택 창이 나타날 때까지 최대 20초 정도 소요될 수 있습니다. 창이 뜰 때까지 잠시만 기다려 주세요.",
-      complete_dialog: "完了! 저장 창을 여는 중...",
+      ERR_BOT_BLOCKED: "ボット保護によりブロックされました。しばらくしてから再試行してください。",
+      ERR_VIDEO_NOT_FOUND: "動画が見つかりませんでした。URLを確認してください。",
+      ERR_TIKTOK_SEARCH: "TikTokの検索結果ページはサポートされていません。動画の個別リンクを入力してください。",
+      ERR_UNSUPPORTED_URL: "サポートされていないURL形式です。",
+      ERR_EXTRACT_FAILED: "データの抽出に失敗しました. 最新の動画か、一時的な制限の可能性があります。",
+      ERR_DOWNLOAD_FAILED: "ダウンロードに失敗しました。もう一度お試しください。",
+      retry_btn: "再試行",
+      success_title: "✅ リクエスト完了",
+      download_another: "続けてダウンロード",
+      started: "処理が開始されました！まもなくダウンロードが始まります。",
+      save_log: "保存先選択ウィンドウが表示されるまで、最大20秒ほどかかる場合があります。ウィンドウが開くまでそのままお待ちください。",
+      complete_dialog: "完了！保存ダイアログを開いています...",
       howto_title1: "リンクをコピー",
       howto_title2: "URLを貼り付け",
       howto_title3: "動画を保存",
@@ -215,36 +215,36 @@ const TRANSLATIONS = {
       feature_sec_desc: "プライバシーを徹底保護",
       faq_title: "よくある質問",
       faq_q1: "どのサイトに対応していますか?",
-      faq_a1: "TikTok, Douyin, Instagram, YouTube, X(Twitter)に対応しています. URL를 붙여넣으면 끝!",
+      faq_a1: "TikTok, Douyin, Instagram, YouTube, X(Twitter)に対応しています。URLを貼り付けるだけで完了です！",
       faq_q2: "利用料金はかかりますか?",
-      faq_a2: "いいえ, 完全に無料입니다. 누구나 자유롭게 이용할 수 있습니다.",
+      faq_a2: "いいえ、完全に無料です。どなたでも自由にご利用いただけます。",
       faq_q3: "動画はどこに保存されますか?",
-      faq_a3: "サーバー에는 저장되지 않고, 직접 전송됩니다. 프라이버시는 보호됩니다.",
-      legal_notice_desc: "著作権者の許可を得たコンテンツのみをダウンロードしてください. TEO는 툴이며, 이용 방법에 관한 책임을 지지 않습니다."
+      faq_a3: "サーバーには保存されず、直接ユーザーに送信されます。プライバシーは保護されますのでご安心ください。",
+      legal_notice_desc: "著作権者の許可を得たコンテンツのみをダウンロードしてください。TEOはツールであり、利用方法に関する責任は負いかねます。"
     },
     youtube: {
       hero_title: "📺 YouTube 動画保存",
-      hero_subtitle: "YouTube動画を高品質MP4で保存",
-      hero_description: "YouTube動画を即座にダウンロードする最速の無料ツールです。HDおよび4K画質対応。",
-      input_placeholder: "YouTubeのリンクを貼り付け..."
+      hero_subtitle: "YouTube動画を高品質MP4で無料ダウンロード",
+      hero_description: "YouTube動画を即座にダウンロードする最速の無料ツールです。4K, 1080pの高画質に対応。",
+      input_placeholder: "YouTubeのリンクをここに貼り付け..."
     },
     tiktok: {
       hero_title: "🎵 TikTok & Douyin 保存",
-      hero_subtitle: "TikTok動画をウォーターマークなしで保存",
-      hero_description: "TikTokやDouyinの動画をロゴなしで保存하는 最強 툴. 고화질 MP4.",
-      input_placeholder: "TikTok 또는 Douyin 링크를 붙여넣으세요..."
+      hero_subtitle: "TikTok動画をウォーターマークなしで最速保存",
+      hero_description: "TikTokやDouyinの動画をロゴなしで保存できる最高のツールです。オリジナルの画質のまま保存できます。",
+      input_placeholder: "TikTokまたはDouyinのリンクをここに貼り付け..."
     },
     instagram: {
       hero_title: "📸 Instagram 保存",
-      hero_subtitle: "리ール, 비디오, 스토리를 로고 없이 저장",
-      hero_description: "Instagramのリールや動画を高画質で即座에 다운로드.",
-      input_placeholder: "Instagram 링크를 붙여넣으세요..."
+      hero_subtitle: "リール、動画、ストーリーをロゴなしで保存",
+      hero_description: "Instagramのリールや動画を高画質で即座にダウンロードできます。",
+      input_placeholder: "Instagramのリンクをここに貼り付け..."
     },
     x: {
       hero_title: "🐦 X (Twitter) 動画保存",
-      hero_subtitle: "X의 영상을 고화질로 즉시 저장",
-      hero_description: "X(Twitter)の動画をウォーターマークなしでMP4保存。高速かつ簡単。",
-      input_placeholder: "X (Twitter) 링크를 붙여넣으세요..."
+      hero_subtitle: "Xのすべての動画を高画質で即座に保存",
+      hero_description: "X(Twitter)の動画をウォーターマークなしでMP4保存できます。最速かつ簡単です。",
+      input_placeholder: "X (Twitter) のリンクをここに貼り付け..."
     }
   },
   id: {
@@ -291,35 +291,35 @@ const TRANSLATIONS = {
       feature_sec_desc: "Privasi Anda terlindungi",
       faq_title: "Pertanyaan yang Sering Diajukan",
       faq_q1: "Situs mana saja yang didukung?",
-      faq_a1: "Kami mendukung TikTok, Douyin, Instagram, YouTube, dan X (Twitter). Cukup tempel tautannya.",
+      faq_a1: "Kami mendukung TikTok, Douyin, Instagram, YouTube, and X (Twitter). Cukup tempel tautannya.",
       faq_q2: "Apakah TEO gratis digunakan?",
       faq_a2: "Ya! TEO sepenuhnya gratis. Kami mendukung diri kami melalui iklan.",
       faq_q3: "Di mana video disimpan?",
-      faq_a3: "File dialirkan langsung dan tidak disimpan secara permanen. Privasi diutamakan!",
+      faq_a3: "File dialirkan langsung and tidak disimpan secara permanen. Privasi diutamakan!",
       legal_notice_desc: "Hanya unduh konten yang Anda miliki izinnya. TEO tidak bertanggung jawab atas penyalahgunaan."
     },
     youtube: {
       hero_title: "📺 Pengunduh Video YouTube",
       hero_subtitle: "Unduh Video YouTube dalam MP4 Kualitas Tinggi",
-      hero_description: "Alat gratis tercepat untuk mengunduh video YouTube secara instan. Mendukung kualitas HD dan 4K.",
+      hero_description: "Alat gratis tercepat untuk mengunduh video YouTube secara instan. Mendukung kualitas HD and 4K.",
       input_placeholder: "Tempel tautan YouTube di sini..."
     },
     tiktok: {
       hero_title: "🎵 Pengunduh TikTok & Douyin",
       hero_subtitle: "Simpan Video TikTok Tanpa Watermark",
-      hero_description: "Alat terbaik untuk menyimpan video TikTok dan Douyin tanpa watermark. MP4 kualitas tinggi.",
+      hero_description: "Alat terbaik untuk menyimpan video TikTok and Douyin tanpa watermark. MP4 kualitas tinggi.",
       input_placeholder: "Tempel tautan TikTok atau Douyin di sini..."
     },
     instagram: {
       hero_title: "📸 Pengunduh Instagram",
       hero_subtitle: "Simpan Reels, Video & Cerita Tanpa Watermark",
-      hero_description: "Unduh Instagram Reels dan video secara instan dalam kualitas tinggi.",
+      hero_description: "Unduh Instagram Reels and video secara instan dalam kualitas tinggi.",
       input_placeholder: "Tempel tautan Instagram di sini..."
     },
     x: {
       hero_title: "🐦 Pengunduh Video X (Twitter)",
       hero_subtitle: "Simpan Video X dalam Kualitas Tinggi Secara Instan",
-      hero_description: "Unduh video X (Twitter) tanpa watermark dalam format MP4. Cepat dan sederhana.",
+      hero_description: "Unduh video X (Twitter) tanpa watermark dalam format MP4. Cepat and sederhana.",
       input_placeholder: "Tempel tautan X (Twitter) di sini..."
     }
   },
@@ -405,7 +405,7 @@ const TRANSLATIONS = {
       meta_description: "Descarga videos de TikTok, Douyin, Instagram, YouTube y X (Twitter) al instante sin marca de agua. La herramienta gratuita más rápida.",
       hero_title: "⚡ TEO Descargador de Video",
       hero_subtitle: "Descarga videos de TikTok, Douyin, Instagram, YouTube y X rápido",
-      hero_description: "La herramienta gratuita más rápida para descargar videos de redes sociales incluyendo Douyin sin marca de agua. Soporta MP4 de alta calidad.",
+      hero_description: "La herramienta gratuita más rápida para descargar videos de redes sociales incluyendo Douyin sin marca de agua. Soporta MP4 de alta qualidade.",
       input_placeholder: "Pega el enlace (TikTok, Douyin, Instagram, YouTube, X)...",
       download_btn: "Descargar",
       loading: "Analizando video...",
@@ -442,36 +442,36 @@ const TRANSLATIONS = {
       feature_sec_title: "Seguro",
       feature_sec_desc: "Tu privacidad protegida",
       faq_title: "Preguntas Frecuentes",
-      faq_q1: "¿Qué sitios son compatibles?",
+      faq_q1: "Qué sitios son compatibles?",
       faq_a1: "Soportamos TikTok, Douyin, Instagram, YouTube y X (Twitter). Simplemente pega el enlace.",
-      faq_q2: "¿Es gratis usar TEO?",
+      faq_q2: "Es gratis usar TEO?",
       faq_a2: "¡Sí! TEO es completamente gratis. Nos mantenemos a través de anuncios.",
-      faq_q3: "¿Dónde se guardan los videos?",
-      faq_a3: "Los archivos se transmiten directamente y no se almacenan permanentemente. ¡La privacidad es lo primero!",
+      faq_q3: "Dónde se guardan los videos?",
+      faq_a3: "Los archivos se transmiten directamente and no se almacenan permanentemente. ¡La privacidad es lo primero!",
       legal_notice_desc: "Solo descarga contenido para el cual tengas permiso. TEO no es responsable del mal uso."
     },
     youtube: {
       hero_title: "📺 Descargador de videos de YouTube",
       hero_subtitle: "Descarga videos de YouTube en MP4 de alta calidad",
-      hero_description: "La herramienta gratuita más rápida para descargar videos de YouTube al instante. Soporta HD y 4K.",
+      hero_description: "La herramienta gratuita más rápida para descargar videos de YouTube al instante. Soporta HD and 4K.",
       input_placeholder: "Pega el enlace de YouTube aquí..."
     },
     tiktok: {
       hero_title: "🎵 Descargador de TikTok y Douyin",
       hero_subtitle: "Guarda videos de TikTok sin marca de agua",
-      hero_description: "La mejor herramienta para guardar videos de TikTok y Douyin sin marca de agua. MP4 de alta calidad.",
+      hero_description: "La mejor herramienta para guardar videos de TikTok and Douyin sin marca de agua. MP4 de alta calidad.",
       input_placeholder: "Pega el enlace de TikTok o Douyin aquí..."
     },
     instagram: {
       hero_title: "📸 Descargador de Instagram",
       hero_subtitle: "Guarda Reels, videos e historias sin marca de agua",
-      hero_description: "Descarga Instagram Reels y videos al instante en alta calidad.",
+      hero_description: "Descarga Instagram Reels and videos al instante en alta calidad.",
       input_placeholder: "Pega el enlace de Instagram aquí..."
     },
     x: {
       hero_title: "🐦 Descargador de videos de X (Twitter)",
       hero_subtitle: "Guarda videos de X en alta calidad al instante",
-      hero_description: "Descarga videos de X (Twitter) sin marca de agua en MP4. Rápido y sencillo.",
+      hero_description: "Descarga videos de X (Twitter) sin marca de agua en MP4. Rápido and sencillo.",
       input_placeholder: "Pega el enlace de X (Twitter) aquí..."
     }
   },
@@ -523,31 +523,31 @@ const TRANSLATIONS = {
       faq_q2: "TEO có miễn phí không?",
       faq_a2: "Có! TEO hoàn toàn miễn phí. Chúng tôi duy trì thông qua quảng cáo.",
       faq_q3: "Video được lưu ở đâu?",
-      faq_a3: "Các tệp được truyền trực tiếp và không được lưu trữ vĩnh viễn. Quyền riêng tư là trên hết!",
+      faq_a3: "Các tệp được truyền trực tiếp and không được lưu trữ vĩnh viễn. Quyền riêng tư là trên hết!",
       legal_notice_desc: "Chỉ tải xuống nội dung mà bạn có quyền. TEO không chịu trách nhiệm về việc lạm dụng."
     },
     youtube: {
       hero_title: "📺 Trình tải video YouTube",
       hero_subtitle: "Tải video YouTube ở định dạng MP4 chất lượng cao",
-      hero_description: "Công cụ miễn phí nhanh nhất để tải video YouTube ngay lập tức. Hỗ trợ chất lượng HD và 4K.",
+      hero_description: "Công cụ miễn phí nhanh nhất để tải video YouTube ngay lập tức. Hỗ trợ chất lượng HD and 4K.",
       input_placeholder: "Dán liên kết YouTube vào đây..."
     },
     tiktok: {
       hero_title: "🎵 Trình tải TikTok & Douyin",
       hero_subtitle: "Lưu video TikTok không có logo",
-      hero_description: "Công cụ tốt nhất để lưu video TikTok và Douyin không có logo. MP4 chất lượng cao.",
+      hero_description: "Công cụ tốt nhất để lưu video TikTok and Douyin không có logo. MP4 chất lượng cao.",
       input_placeholder: "Dán liên kết TikTok hoặc Douyin vào đây..."
     },
     instagram: {
       hero_title: "📸 Trình tải Instagram",
       hero_subtitle: "Lưu Reels, video & tin câu chuyện không có logo",
-      hero_description: "Tải Instagram Reels và video ngay lập tức ở chất lượng cao.",
+      hero_description: "Tải Instagram Reels and video ngay lập tức ở chất lượng cao.",
       input_placeholder: "Dán liên kết Instagram vào đây..."
     },
     x: {
       hero_title: "🐦 Trình tải video X (Twitter)",
       hero_subtitle: "Lưu video X chất lượng cao ngay lập tức",
-      hero_description: "Tải video X (Twitter) không có logo ở định dạng MP4. Nhanh chóng và đơn giản.",
+      hero_description: "Tải video X (Twitter) không có logo ở định dạng MP4. Nhanh chóng and đơn giản.",
       input_placeholder: "Dán liên kết X (Twitter) vào đây..."
     }
   },
@@ -599,41 +599,41 @@ const TRANSLATIONS = {
       faq_q2: "TEO бесплатен?",
       faq_a2: "Да! TEO полностью бесплатен. Мы существуем за счет рекламы.",
       faq_q3: "Где сохраняются видео?",
-      faq_a3: "Файлы передаются напрямую и не хранятся постоянно. Конфиденциальность превыше всего!",
+      faq_a3: "Файлы передаются напрямую and не хранятся постоянно. Конфиденциальность превыше всего!",
       legal_notice_desc: "Скачивайте только тот контент, на который у вас есть разрешение. TEO не несет ответственности за злоупотребление."
     },
     youtube: {
       hero_title: "📺 Загрузчик видео с YouTube",
       hero_subtitle: "Скачивайте видео с YouTube в высоком качестве MP4",
-      hero_description: "Самый быстрый бесплатный инструмент для мгновенного скачивания видео с YouTube. Поддержка HD и 4K.",
+      hero_description: "Самый быстрый бесплатный инструмент для мгновенного скачивания видео с YouTube. Поддержка HD and 4K.",
       input_placeholder: "Вставьте ссылку на YouTube здесь..."
     },
     tiktok: {
       hero_title: "🎵 Загрузчик из TikTok и Douyin",
       hero_subtitle: "Сохраняйте видео из TikTok без водяных знаков",
-      hero_description: "Лучший инструмент для сохранения видео из TikTok и Douyin без водяных знаков. Высокое качество MP4.",
+      hero_description: "Лучший инструмент для сохранения видео из TikTok and Douyin без водяных знаков. Высокое качество MP4.",
       input_placeholder: "Вставьте ссылку на TikTok или Douyin здесь..."
     },
     instagram: {
       hero_title: "📸 Загрузчик из Instagram",
       hero_subtitle: "Сохраняйте Reels, видео и истории без водяных знаков",
-      hero_description: "Скачивайте Reels и видео из Instagram мгновенно в высоком качестве.",
+      hero_description: "Скачивайте Reels and видео из Instagram мгновенно в высоком качестве.",
       input_placeholder: "Вставьте ссылку на Instagram здесь..."
     },
     x: {
       hero_title: "🐦 Загрузчик видео из X (Twitter)",
       hero_subtitle: "Сохраняйте видео из X в высоком качестве мгновенно",
-      hero_description: "Скачивайте видео из X (Twitter) без водяных знаков в формате MP4. Быстро и просто.",
+      hero_description: "Скачивайте видео из X (Twitter) без водяных знаков в формате MP4. Быстро and просто.",
       input_placeholder: "Вставьте ссылку на X (Twitter) здесь..."
     }
   },
   hi: {
     home: {
       meta_title: "TEO - सर्वश्रेष्ठ TikTok, Douyin, Instagram, YouTube और X वीडियो डाउनलोडर",
-      meta_description: "बिना वॉटरमार्क के TikTok, Douyin, Instagram, YouTube और X (Twitter) वीडियो तुरंत डाउनलोड करें। सबसे तेज़ और मुफ़्त टूल।",
+      meta_description: "बिना वॉटरmark के TikTok, Douyin, Instagram, YouTube और X (Twitter) वीडियो तुरंत डाउनलोड करें। सबसे तेज़ और मुफ़्त टूल।",
       hero_title: "⚡ TEO वीडियो डाउनलोडर",
       hero_subtitle: "TikTok, Douyin, Instagram, YouTube और X वीडियो तेज़ी से डाउनलोड करें",
-      hero_description: "वॉटरmark के बिना Douyin सहित सोशल मीडिया वीडियो डाउनलोड करने का सबसे तेज़ मुफ़्त टूल। उच्च गुणवत्ता MP4 समर्थन।",
+      hero_description: "वॉटरमार्क के बिना Douyin सहित सोशल मीडिया वीडियो डाउनलोड करने का सबसे तेज़ मुफ़्त टूल। उच्च गुणवत्ता MP4 समर्थन।",
       input_placeholder: "लिंक पेस्ट करें (TikTok, Douyin, Instagram, YouTube, X)...",
       download_btn: "डाउनलोड",
       loading: "वीडियो का विश्लेषण कर रहा है...",
@@ -681,7 +681,7 @@ const TRANSLATIONS = {
     youtube: {
       hero_title: "📺 YouTube वीडियो डाउनलोडर",
       hero_subtitle: "उच्च गुणवत्ता वाले MP4 में YouTube वीडियो डाउनलोड करें",
-      hero_description: "YouTube वीडियो तुरंत डाउनलोड करने का सबसे तेज़ मुफ़्त टूल। HD और 4K गुणवत्ता का समर्थन करता है।",
+      hero_description: "YouTube वीडियो तुरंत डाउनलोड करने का सबसे तेज़ मुफ़्त टूल। HD and 4K गुणवत्ता का समर्थन करता है।",
       input_placeholder: "यहाँ YouTube लिंक पेस्ट करें..."
     },
     tiktok: {
@@ -692,7 +692,7 @@ const TRANSLATIONS = {
     },
     instagram: {
       hero_title: "📸 Instagram डाउनलोडर",
-      hero_subtitle: "रील्स, वीडियो और कहानियां बिना वॉटरmark के सहेजें",
+      hero_subtitle: "रील्स, वीडियो और कहानियां बिना वॉटरमार्क के सहेजें",
       hero_description: "उच्च गुणवत्ता में तुरंत Instagram रील्स और वीडियो डाउनलोड करें।",
       input_placeholder: "यहाँ Instagram लिंक पेस्ट करें..."
     },
@@ -757,7 +757,7 @@ const TRANSLATIONS = {
     youtube: {
       hero_title: "📺 YouTube Video Downloader",
       hero_subtitle: "YouTube-Videos in hochwertigem MP4 herunterladen",
-      hero_description: "Das schnellste kostenlose Tool, um YouTube-Videos sofort herunterzuladen. Unterstützt HD- und 4K-Qualität.",
+      hero_description: "Das schnellste kostenlose Tool, um YouTube-Videos sofort herunterzuladen. Unterstützt HD und 4K-Qualität.",
       input_placeholder: "YouTube-Link hier einfügen..."
     },
     tiktok: {

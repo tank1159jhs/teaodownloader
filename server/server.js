@@ -190,7 +190,7 @@ async function executeYtDlp(args, config, timeout, jobId = null) {
     const env = { 
       ...process.env, 
       YTDLP_PLUGINS_PATH: '/home/opc/.yt-dlp/plugins',
-      PYTHONPATH: (process.env.PYTHONPATH ? process.env.PYTHONPATH + ':' : '') + '/home/opc/.yt-dlp/plugins'
+      PYTHONPATH: '/home/opc/.yt-dlp/plugins'
     };
 
     const venvYtDlp = '/var/www/app/server/.venv/bin/yt-dlp';

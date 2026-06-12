@@ -21,7 +21,7 @@ const TEMP_DIR = process.env.TEMP_DIR || DEFAULT_TEMP;
 
 // 설정
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
-const DOWNLOAD_TIMEOUT = 120000; // 2분
+const DOWNLOAD_TIMEOUT = 300000; // 5분으로 연장
 const CONCURRENT_JOBS = 5;
 
 // 상태 관리
@@ -63,7 +63,8 @@ const PLATFORM_CONFIGS = {
       '--force-ipv4',
       '--no-playlist',
       '--no-check-certificates',
-      '--concurrent-fragments', '10',
+      '--concurrent-fragments', '16',
+      '--buffer-size', '1M',
       '--retries', '10',
       '--fragment-retries', '10'
     ]
